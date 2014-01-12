@@ -14,7 +14,7 @@ public class ballMover : MonoBehaviour {
 
 	}
 	void Start(){
-		rigidbody2D.velocity = new Vector2 (0, 10);
+		rigidbody2D.velocity = new Vector2 (0, 2);
 	}
 	void Update(){
 		Vector3 offset = transform.position - firstCollider.transform.position;

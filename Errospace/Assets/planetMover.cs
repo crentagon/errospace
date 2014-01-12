@@ -15,7 +15,7 @@ public class planetMover : MonoBehaviour {
 	void Update () {
 		//Vector2 position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 		//BlackBall.localPosition = position;
-		if (Input.GetMouseButtonDown (0)) {
+		/*if (Input.GetMouseButtonDown (0)) {
 			float mousex, mousey;
 			Vector2 mousepos;
 			mousex = Input.mousePosition.x;
@@ -24,8 +24,25 @@ public class planetMover : MonoBehaviour {
 			print(mousepos);
 			BlackBall.localPosition = mousepos;
 		}
-
+		*/
 		//if (Input.GetButtonDown ("Jump"))
 			//rigidbody2D.AddForce(jumpVelocity);
 	}
+
+	void OnMouseDrag(){
+		float mousex, mousey;
+		Vector2 mousepos;
+		mousex = Input.mousePosition.x;
+		mousey = Input.mousePosition.y;
+		mousepos = Camera.main.ScreenToWorldPoint(new Vector2 (mousex,mousey));
+		print(mousepos);
+		BlackBall.localPosition = mousepos;
+	}
+
+   /* void OnMouseDrag(){
+			Vector2 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+			
+			Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+			transform.position = curPosition;
+		}*/
 }
