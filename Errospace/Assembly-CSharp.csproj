@@ -46,9 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\C# Scripts\allLevels.cs" />
+     <Compile Include="Assets\C# Scripts\gameStart.cs" />
+     <Compile Include="Assets\C# Scripts\goalScript.cs" />
+     <Compile Include="Assets\C# Scripts\planetMover.cs" />
+     <Compile Include="Assets\C# Scripts\rocketMover.cs" />
+     <Compile Include="Assets\C# Scripts\startMenu.cs" />
      <Compile Include="Assets\Managers\GameEventManager.cs" />
-     <Compile Include="Assets\ballMover.cs" />
-     <Compile Include="Assets\planetMover.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

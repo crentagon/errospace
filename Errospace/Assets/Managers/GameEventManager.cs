@@ -1,15 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public static class GameEventManager {
+	/*
+	public delegate void GameEvent();
 
-public class GameEventManager : MonoBehaviour {
+	public static event GameEvent GameFinish, GameOver;
 
-	// Use this for initialization
-	void Start () {
-	
+	public static void TriggerGameFinish(){
+		if(GameFinish != null){
+			GameFinish();
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public static void TriggerGameOver(){
+		if(GameOver != null){
+			GameOver();
+		}
 	}
+
+	private void GameFinish(){
+		print ("");
+	}*/
 }
