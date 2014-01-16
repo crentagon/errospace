@@ -20,7 +20,12 @@ public class rocketMover : MonoBehaviour {
 	void Update(){
 		if(firstCollider != null && firstCollider.transform.name != "LevelBoundaries" && isActive){
 			Vector3 offset = transform.position - firstCollider.transform.position;
-			rigidbody2D.velocity = rigidbody2D.velocity - (Vector2)offset;
+			float mag = offset.magnitude;
+			offset.Normalize ();
+			print(offset);
+			Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
+
+			rigidbody2D.velocity = rigidbody2D.velocity - force;
 		}
 	}
 
