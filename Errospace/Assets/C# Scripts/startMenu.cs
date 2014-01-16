@@ -19,11 +19,14 @@ public class startMenu : MonoBehaviour {
 
 		//New Game
 		if (GUI.Button (new Rect ((Screen.width-buttonWidth)/2,(Screen.height-buttonHeight+50)/2,buttonWidth, buttonHeight), "New Game")) {
-			print ("You clicked the NEW GAME button!");
+			Application.LoadLevel("Level01");
 		}
 		//Select Level
 		if (GUI.Button (new Rect ((Screen.width-buttonWidth)/2,(Screen.height+100)/2,buttonWidth, buttonHeight), "Continue")) {
 			print ("You clicked the CONTINUE button!");
+		}
+		if (GUI.Button (new Rect ((Screen.width-buttonWidth)/2,(Screen.height+180)/2,buttonWidth, buttonHeight), "Quit")) {
+			Application.Quit();
 		}
 	}
 }
