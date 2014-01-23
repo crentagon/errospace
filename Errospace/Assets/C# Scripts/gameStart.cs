@@ -46,5 +46,8 @@ public class gameStart : MonoBehaviour {
 				planetScript.isMovable = false;
 			}
 		}
+		if (GUI.Button (new Rect (Screen.width-100,10,40,40), "Refresh")) { //should be an icon
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 }

@@ -18,14 +18,14 @@ public class goalScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 
-		if(firstCollider != null){// && firstCollider.transform.name == "Rocket"){
+		if(firstCollider != null && firstCollider.transform.name == "Rocket"){
 			//Rocket must stop at the goal position
 			rocketMover rocketScript = firstCollider.GetComponent<rocketMover>();
 			rocketScript.isActive = false;
 			rocketScript.rigidbody2D.velocity = new Vector2 (0, 0);
 			rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
 			showNextLevel = true;
-			print("Game finished!");
+//			print("Game finished!");
 		}
 	}
 

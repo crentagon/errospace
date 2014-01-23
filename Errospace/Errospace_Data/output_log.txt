@@ -1,0 +1,75 @@
+Initialize engine version: 4.3.0f4 (e01000627d60)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [igdumd32.dll 9.17.10.2843]
+    Renderer: Intel(R) HD Graphics
+    Vendor:   Intel
+    VRAM:     848 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\ACAD\3B\CS192\errospace\Errospace\Errospace_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\ACAD\3B\CS192\errospace\Errospace\Errospace_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\ACAD\3B\CS192\errospace\Errospace\Errospace_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\ACAD\3B\CS192\errospace\Errospace\Errospace_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+- Completed reload, in  0.137 seconds
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+UnloadTime: 0.473976 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 111.
+Total: 1.343554 ms (FindLiveObjects: 0.025191 ms CreateObjectMapping: 0.017727 ms MarkObjects: 0.229523 ms  DeleteObjects: 0.006531 ms)
+
+UnloadTime: 0.468377 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 113.
+Total: 1.278242 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.033588 ms MarkObjects: 0.273375 ms  DeleteObjects: 0.007464 ms)
+
+UnloadTime: 0.557015 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 111.
+Total: 1.389272 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.015861 ms MarkObjects: 0.231389 ms  DeleteObjects: 0.006531 ms)
+
+UnloadTime: 0.454382 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 113.
+Total: 1.261448 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.015861 ms MarkObjects: 0.223925 ms  DeleteObjects: 0.005598 ms)
+
+Level now is 1
+ 
+(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
+
+UnloadTime: 0.458114 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 111.
+Total: 1.230658 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.015861 ms MarkObjects: 0.225791 ms  DeleteObjects: 0.007464 ms)
+
+UnloadTime: 0.455315 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 112.
+Total: 1.331424 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.015861 ms MarkObjects: 0.237921 ms  DeleteObjects: 0.006531 ms)
+
+UnloadTime: 0.455315 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 112.
+Total: 1.331424 ms (FindLiveObjects: 0.045718 ms CreateObjectMapping: 0.016794 ms MarkObjects: 0.240720 ms  DeleteObjects: 0.005598 ms)
+
+UnloadTime: 0.503832 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 112.
+Total: 1.296903 ms (FindLiveObjects: 0.012129 ms CreateObjectMapping: 0.017727 ms MarkObjects: 0.253782 ms  DeleteObjects: 0.006531 ms)
+
+UnloadTime: 0.485172 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 112.
+Total: 1.237189 ms (FindLiveObjects: 0.011196 ms CreateObjectMapping: 0.015861 ms MarkObjects: 0.255648 ms  DeleteObjects: 0.006531 ms)
+

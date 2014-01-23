@@ -9,7 +9,6 @@ public class rocketMover : MonoBehaviour {
 	public bool isActive;
 	public Transform planet;
 	Collider2D firstCollider;
-	public Transform planet;
 
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
