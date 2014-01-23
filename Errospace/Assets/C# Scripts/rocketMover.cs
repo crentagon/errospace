@@ -7,7 +7,7 @@ public class rocketMover : MonoBehaviour {
 
 	public static float range = 10000;
 	public bool isActive;
-
+	public Transform planet;
 	Collider2D firstCollider;
 	public Transform planet;
 
@@ -28,7 +28,7 @@ public class rocketMover : MonoBehaviour {
 			offset.Normalize ();
 			print(offset);
 			Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
-
+			
 			rigidbody2D.velocity = rigidbody2D.velocity - force;
 		}
 		else{
