@@ -9,15 +9,30 @@ public class rocketMover : MonoBehaviour {
 	public bool isActive;
 	public Transform planet;
 	Collider2D firstCollider;
+	public int starCount = 0;
+	private int previousStarCount = 0;
 
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
+
+
+	}
+	
+	void OnColliderExit2D(Collider2D collider){
+		firstCollider = null;
 	}
 	/*
 	void Start(){
 		rigidbody2D.velocity = new Vector2 (0, 2);
 	}*/
 	void Update(){
+		//print (firstCollider.transform.name);
+		if (firstCollider != null && firstCollider.transform.name == "Star") {
+			starCount+=1;
+			Destroy(firstCollider.gameObject);
+			firstCollider = null;
+		}
+
 		if(isActive){			
 			print("making trails.");
 			trailMaker.Instance.makeTrail(transform.position);
