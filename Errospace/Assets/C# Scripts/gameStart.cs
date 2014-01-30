@@ -5,6 +5,10 @@ public class gameStart : MonoBehaviour {
 
 	public Transform rocket;
 	public Transform planets;
+	public Camera mainCamera;
+	const float smooth = 0.2f;
+	const float smoothDrag = 0.7f;
+	const int maxZoom = 2;
 
 	bool isGoButtonVisible = true;
 	
@@ -15,17 +19,39 @@ public class gameStart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetMouseButton(1)){
+			Vector3 CameraPos;
+			float MouseX;
+			float MouseY;
 
+			MouseX = Input.GetAxis("Mouse X");
+			MouseY = Input.GetAxis("Mouse Y");
+
+			CameraPos = new Vector3(-MouseX, -MouseY, 0);
+
+			mainCamera.transform.position += CameraPos*smoothDrag;
+		}
 	}
 
 	void OnGUI () {
-		var buttonWidth = 70;
-		var buttonHeight = 30;
-		var startVelocity = 4;
+		int buttonWidth = 70;
+		int buttonHeight = 30;
+		int startVelocity = 4;
+		
+		int miniButtonWidth = 40;
+		int miniButtonHeight = 40;
 
-		//print ("Before: "+isGoButtonVisible);
+
+		if (GUI.RepeatButton (new Rect (Screen.width-50,50,miniButtonWidth, miniButtonWidth), "out")) {
+			mainCamera.orthographicSize+=smooth;
+		}
+		if (GUI.RepeatButton (new Rect (Screen.width-100,50, miniButtonWidth, miniButtonHeight), "in")) {
+			if(mainCamera.orthographicSize>maxZoom)
+				mainCamera.orthographicSize-=smooth;
+		}
+
+
 		//The "GO" Button!
-		//TO-DO: Bug on the button, need to double click before button disappears. :u
 		if(isGoButtonVisible){
 			if (GUI.Button (new Rect ((Screen.width-buttonWidth-10),(Screen.height-buttonHeight-10),buttonWidth, buttonHeight), "Go!")) {
 				//Hide this button.

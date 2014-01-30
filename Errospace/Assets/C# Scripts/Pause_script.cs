@@ -41,10 +41,10 @@ public class Pause_script : MonoBehaviour {
 			GUILayout.EndArea();
 		}
 		else {
-			if (GUI.Button (new Rect (Screen.width-100,10,40,40), "Pause")) {
+			if (GUI.Button (new Rect (Screen.width-50,10,40,40), "Pause")) {
 				onPause = true;
 			}
-			if (GUI.Button (new Rect (Screen.width-150,10,40,40), "Refresh")) { //this shouldn't really be here
+			if (GUI.Button (new Rect (Screen.width-100,10,40,40), "Refresh")) { //this shouldn't really be here
 				Application.LoadLevel(Application.loadedLevel);
 			}
 		}

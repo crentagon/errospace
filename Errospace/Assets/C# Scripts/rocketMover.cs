@@ -10,7 +10,6 @@ public class rocketMover : MonoBehaviour {
 	public Transform planet;
 	Collider2D firstCollider;
 	public int starCount = 0;
-	private int previousStarCount = 0;
 
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
