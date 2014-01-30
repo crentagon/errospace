@@ -7,7 +7,9 @@ public class Pause_script : MonoBehaviour {
 //	pauseGUI.enabled = false;
 
 	static bool onPause = false;
-	
+	public Texture2D refreshIcon;
+	public Texture2D pauseIcon;
+
 	// Use this for initialization
 	void Start () {
 
@@ -41,11 +43,16 @@ public class Pause_script : MonoBehaviour {
 			GUILayout.EndArea();
 		}
 		else {
-			if (GUI.Button (new Rect (Screen.width-50,10,40,40), "Pause")) {
-				onPause = true;
-			}
-			if (GUI.Button (new Rect (Screen.width-100,10,40,40), "Refresh")) { //this shouldn't really be here
+			GUIStyle guiStyle = new GUIStyle();
+			guiStyle.padding = new RectOffset(0,0,0,0);
+
+			//GUI.DrawTexture(new Rect (Screen.width-50,10,40,40), icon, ScaleMode.StretchToFill,  true,  10.0f)
+			if (GUI.Button (new Rect (Screen.width-50,10,40,40), new GUIContent(refreshIcon), guiStyle)) {
 				Application.LoadLevel(Application.loadedLevel);
+			}
+
+			if (GUI.Button (new Rect (Screen.width-100,10,40,40), new GUIContent(pauseIcon), guiStyle)) { //this shouldn't really be here
+				onPause = true;
 			}
 		}
 	}
