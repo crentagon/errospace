@@ -39,10 +39,12 @@ public class rocketMover : MonoBehaviour {
 			Vector3 offset = transform.position - planet.transform.position;
 			float mag = offset.magnitude;
 			offset.Normalize ();
+
 			print(offset);
 			Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
 			
 			rigidbody2D.velocity = rigidbody2D.velocity - force;
+			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
 		}
 		else{
 			rigidbody2D.velocity = new Vector2 (0, 0);

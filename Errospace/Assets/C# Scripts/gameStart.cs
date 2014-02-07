@@ -10,6 +10,10 @@ public class gameStart : MonoBehaviour {
 	const float smoothDrag = 0.7f;
 	const int maxZoom = 2;
 
+	public Texture2D zoominIcon;
+	public Texture2D zoomoutIcon;
+	public Texture2D goIcon;
+
 	bool isGoButtonVisible = true;
 	
 	// Use this for initialization
@@ -34,18 +38,20 @@ public class gameStart : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		int buttonWidth = 70;
-		int buttonHeight = 30;
+		int buttonWidth = 80;
+		int buttonHeight = 40;
 		int startVelocity = 4;
 		
 		int miniButtonWidth = 40;
 		int miniButtonHeight = 40;
 
+		GUIStyle guiStyle = new GUIStyle();
+		guiStyle.padding = new RectOffset(0,0,0,0);
 
-		if (GUI.RepeatButton (new Rect (Screen.width-50,50,miniButtonWidth, miniButtonWidth), "out")) {
+		if (GUI.RepeatButton (new Rect (Screen.width-50,60,miniButtonWidth, miniButtonWidth), new GUIContent(zoomoutIcon), guiStyle)) {
 			mainCamera.orthographicSize+=smooth;
 		}
-		if (GUI.RepeatButton (new Rect (Screen.width-100,50, miniButtonWidth, miniButtonHeight), "in")) {
+		if (GUI.RepeatButton (new Rect (Screen.width-100,60, miniButtonWidth, miniButtonHeight), new GUIContent(zoominIcon), guiStyle)) {
 			if(mainCamera.orthographicSize>maxZoom)
 				mainCamera.orthographicSize-=smooth;
 		}
@@ -53,7 +59,7 @@ public class gameStart : MonoBehaviour {
 
 		//The "GO" Button!
 		if(isGoButtonVisible){
-			if (GUI.Button (new Rect ((Screen.width-buttonWidth-10),(Screen.height-buttonHeight-10),buttonWidth, buttonHeight), "Go!")) {
+			if (GUI.Button (new Rect ((Screen.width-buttonWidth),(Screen.height-buttonHeight),buttonWidth, buttonHeight), new GUIContent(goIcon), guiStyle)) {
 				//Hide this button.
 				isGoButtonVisible = false;				
 				//print ("After: "+isGoButtonVisible);
