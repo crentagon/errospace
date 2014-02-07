@@ -10,6 +10,9 @@ public class gameStart : MonoBehaviour {
 	const float smoothDrag = 0.7f;
 	const int maxZoom = 2;
 
+	private Vector3 prevCamPos;
+	private Vector3 mouseDownPos;
+
 	public Texture2D zoominIcon;
 	public Texture2D zoomoutIcon;
 	public Texture2D goIcon;
@@ -23,18 +26,36 @@ public class gameStart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetMouseButton(1)){
-			Vector3 CameraPos;
-			float MouseX;
-			float MouseY;
-
-			MouseX = Input.GetAxis("Mouse X");
-			MouseY = Input.GetAxis("Mouse Y");
-
-			CameraPos = new Vector3(-MouseX, -MouseY, 0);
-
-			mainCamera.transform.position += CameraPos*smoothDrag;
+		if (Input.GetMouseButtonDown (1)) {
+			prevCamPos = mainCamera.transform.position;
+			mouseDownPos = Input.mousePosition;
+			print ("Hey.");
 		}
+
+		if (Input.GetMouseButton (1)) {
+			Vector3 pointInSpace = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+			Vector3 difference = pointInSpace - mainCamera.ScreenToWorldPoint(mouseDownPos);
+			mainCamera.transform.position = prevCamPos - difference;
+			print (prevCamPos);
+		}
+
+//		if(Input.GetMouseButton(1)){
+//			RaycastHit R = new Ray();
+//
+//
+//
+//
+//			Vector3 CameraPos;
+//			float MouseX;
+//			float MouseY;
+//
+//			MouseX = Input.GetAxis("Mouse X");
+//			MouseY = Input.GetAxis("Mouse Y");
+//
+//			CameraPos = new Vector3(-MouseX, -MouseY, 0);
+//
+//			mainCamera.transform.position += CameraPos*smoothDrag;
+//		}
 	}
 
 	void OnGUI () {
