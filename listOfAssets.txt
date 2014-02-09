@@ -1,0 +1,23 @@
+List of assets
+	[x] Rocket
+	[x] Stars
+	[x] Planets (five different planets)
+	[x] Goal
+	Buttons
+		Generic
+		The five buttons (64 x 64)
+			[x] Resume
+			[x] Pause
+			[x] Zoom in
+			[x] Zoom out
+			[x] Launch
+			Back
+		Level-select buttons 
+		Stage-select
+	Backgrounds
+		Welcome screen
+		Level selection
+		Stage selection
+		Stars
+	
+New art style! Blackened corners.
