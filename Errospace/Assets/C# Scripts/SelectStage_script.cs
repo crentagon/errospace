@@ -4,7 +4,7 @@ using System.IO;
 
 public class SelectStage_script : MonoBehaviour {
 
-	string curLevel;
+	//string curLevel;
 	int numStages;
 
 	//Get current working directory + Text folder
@@ -15,7 +15,7 @@ public class SelectStage_script : MonoBehaviour {
 
 
 		//lvl.sav contains the curLevel selectedby user in the previous script (SelectLevel_script)
-		curLevel = File.ReadAllText (path + "\\lvl.sav");
+		//curLevel = File.ReadAllText (path + "\\lvl.sav");
 
 
 	}

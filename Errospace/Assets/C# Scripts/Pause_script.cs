@@ -26,6 +26,9 @@ public class Pause_script : MonoBehaviour {
 	}
 
 	void OnGUI () {
+		int miniButtonWidth = 40;
+		int miniButtonHeight = 40;
+
 		if(onPause){
 			GUILayout.BeginArea(new Rect( Screen.width/4, Screen.height/4, Screen.width-Screen.width/2, Screen.height/2 ));
 				if(GUILayout.Button("Resume")){
@@ -47,11 +50,11 @@ public class Pause_script : MonoBehaviour {
 			guiStyle.padding = new RectOffset(0,0,0,0);
 
 			//GUI.DrawTexture(new Rect (Screen.width-50,10,40,40), icon, ScaleMode.StretchToFill,  true,  10.0f)
-			if (GUI.Button (new Rect (Screen.width-50,10,40,40), new GUIContent(refreshIcon), guiStyle)) {
+			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,2*miniButtonHeight+20,miniButtonWidth,miniButtonHeight), new GUIContent(refreshIcon), guiStyle)) {
 				Application.LoadLevel(Application.loadedLevel);
 			}
 
-			if (GUI.Button (new Rect (Screen.width-100,10,40,40), new GUIContent(pauseIcon), guiStyle)) { //this shouldn't really be here
+			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,3*miniButtonHeight+25,miniButtonWidth,miniButtonHeight), new GUIContent(pauseIcon), guiStyle)) { //this shouldn't really be here
 				onPause = true;
 			}
 		}

@@ -1,3 +1,0 @@
-File > Build Settings > Scenes to Build >
-	Drag from the Project tab
-	Scene number
