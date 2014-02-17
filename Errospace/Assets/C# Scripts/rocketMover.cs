@@ -9,6 +9,7 @@ public class rocketMover : MonoBehaviour {
 	public bool isActive;
 	public Transform planet;
 	public Transform planet2;
+	public Transform hole;
 	Collider2D firstCollider;
 	public int starCount = 0;
 
@@ -56,6 +57,17 @@ public class rocketMover : MonoBehaviour {
 				Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
 				
 				rigidbody2D.velocity = rigidbody2D.velocity - force;
+			}
+			
+			if(hole != null){
+				Vector3 offset = transform.position - hole.transform.position;
+				float mag = offset.magnitude;
+				if(mag < 4.0){
+					print("neeear "+mag);
+					rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x * (float)0.80,rigidbody2D.velocity.y * (float)0.80);
+					Vector2 force = new Vector2 ((float)4.0*offset.x / mag / mag, (float)4.0*offset.y / mag / mag);
+					rigidbody2D.velocity = rigidbody2D.velocity - force;
+				}
 			}
 			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
 		}
