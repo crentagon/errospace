@@ -7,16 +7,14 @@ public class rocketMover : MonoBehaviour {
 
 	public static float range = 10000;
 	public bool isActive;
-	public Transform planet;
-	public Transform planet2;
-	public Transform hole;
+	public Transform[] planets;
+	public Transform[] holes;
+	public Transform trail;
 	Collider2D firstCollider;
 	public int starCount = 0;
 
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
-
-
 	}
 	
 	void OnColliderExit2D(Collider2D collider){
@@ -35,39 +33,22 @@ public class rocketMover : MonoBehaviour {
 		}
 
 		if(isActive){
-			print("making trails.");
-			trailMaker.Instance.makeTrail(transform.position);
-			// firstCollider != null && firstCollider.transform.name != "LevelBoundaries" 
-			if(planet != null){
-				Vector3 offset = transform.position - planet.transform.position;
+			//trailMaker.Instance.makeTrail(transform.position);
+			for(int i=0; i < planets.Length; i++){
+				Vector3 offset = transform.position - planets[i].transform.position;
 				float mag = offset.magnitude;
-				offset.Normalize ();
-
-				print(offset);
-				Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
-				
+				offset.Normalize();
+				Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y/(mag*mag));
 				rigidbody2D.velocity = rigidbody2D.velocity - force;
-			}
-			if(planet2 != null){
-				Vector3 offset = transform.position - planet2.transform.position;
-				float mag = offset.magnitude;
-				offset.Normalize ();
-				
-				print(offset);
-				Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
-				
-				rigidbody2D.velocity = rigidbody2D.velocity - force;
-			}
 			
-			if(hole != null){
-				Vector3 offset = transform.position - hole.transform.position;
+			}
+			for(int i=0; i < holes.Length; i++){
+				Vector3 offset = transform.position - holes[i].transform.position;
 				float mag = offset.magnitude;
-				if(mag < 4.0){
-					print("neeear "+mag);
-					rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x * (float)0.80,rigidbody2D.velocity.y * (float)0.80);
-					Vector2 force = new Vector2 ((float)4.0*offset.x / mag / mag, (float)4.0*offset.y / mag / mag);
-					rigidbody2D.velocity = rigidbody2D.velocity - force;
-				}
+				offset.Normalize();
+				Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y /(mag*mag));
+				rigidbody2D.velocity = rigidbody2D.velocity - force;
+				//rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,rigidbody2D.velocity.y);
 			}
 			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
 		}
