@@ -130,7 +130,8 @@ public class gameStart : MonoBehaviour {
 					rocketScript.rigidbody2D.velocity = new Vector2 (0, startVelocity);
 					
 					//Planets are no longer movable.
-					planetScript.isMovable = false;
+					if(planetScript != null)
+						planetScript.isMovable = false;
 
 				}
 				GUI.Label(new Rect ((Screen.width-buttonWidth+7),(Screen.height-buttonHeight+10),buttonWidth, buttonHeight), "LAUNCH", textStyle);

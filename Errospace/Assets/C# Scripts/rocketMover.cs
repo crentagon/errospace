@@ -32,20 +32,18 @@ public class rocketMover : MonoBehaviour {
 			if(planets != null){
 				for(int i=0; i < planets.Length; i++){
 					Vector3 offset = transform.position - planets[i].transform.position;
-					float mag = offset.magnitude;
-					offset.Normalize();
-					Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y/(mag*mag));
-					rigidbody2D.velocity = rigidbody2D.velocity - force;
+					float factor = 45.0f;
+					Vector2 force = - offset.normalized * factor / offset.sqrMagnitude;
+					rigidbody2D.AddForce(force);
 				}
 			}
 			if(holes != null){
 				for(int i=0; i < holes.Length; i++){
 					Vector3 offset = transform.position - holes[i].transform.position;
-					float mag = offset.magnitude;
-					offset.Normalize();
-					Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y /(mag*mag));
-					rigidbody2D.velocity = rigidbody2D.velocity - force;
-					rigidbody2D.velocity = new Vector2((float)0.9995*rigidbody2D.velocity.x, (float)0.9995*rigidbody2D.velocity.y);
+					float factor = 65.0f;
+					Vector2 force = - offset.normalized * factor / offset.sqrMagnitude;
+					force = force - rigidbody2D.velocity * 0.1f;
+					rigidbody2D.AddForce(force);
 				}
 			}
 			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
