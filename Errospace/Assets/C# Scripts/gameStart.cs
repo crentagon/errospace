@@ -40,10 +40,17 @@ public class gameStart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(onPause)
+
+		rocketMover rocketScript = rocket.GetComponent<rocketMover>();
+		planetMover planetScript = planets.GetComponentInChildren<planetMover>();
+
+		if(onPause) {
 			Time.timeScale = 0;
+			rocketScript.enabled = false;
+		}
 		else {
 			Time.timeScale = 1;
+			rocketScript.enabled = true;
 		}
 
 		if (Input.GetMouseButtonDown (1)) {
@@ -124,11 +131,10 @@ public class gameStart : MonoBehaviour {
 					
 					//Planets are no longer movable.
 					planetScript.isMovable = false;
+
 				}
 				GUI.Label(new Rect ((Screen.width-buttonWidth+7),(Screen.height-buttonHeight+10),buttonWidth, buttonHeight), "LAUNCH", textStyle);
 			}
-			
-
 		}
 	}
 }

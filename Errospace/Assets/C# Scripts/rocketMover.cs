@@ -20,10 +20,6 @@ public class rocketMover : MonoBehaviour {
 	void OnColliderExit2D(Collider2D collider){
 		firstCollider = null;
 	}
-	/*
-	void Start(){
-		rigidbody2D.velocity = new Vector2 (0, 2);
-	}*/
 	void Update(){
 		//print (firstCollider.transform.name);
 		if (firstCollider != null && firstCollider.transform.name == "Star") {
@@ -33,22 +29,24 @@ public class rocketMover : MonoBehaviour {
 		}
 
 		if(isActive){
-			//trailMaker.Instance.makeTrail(transform.position);
-			for(int i=0; i < planets.Length; i++){
-				Vector3 offset = transform.position - planets[i].transform.position;
-				float mag = offset.magnitude;
-				offset.Normalize();
-				Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y/(mag*mag));
-				rigidbody2D.velocity = rigidbody2D.velocity - force;
-			
+			if(planets != null){
+				for(int i=0; i < planets.Length; i++){
+					Vector3 offset = transform.position - planets[i].transform.position;
+					float mag = offset.magnitude;
+					offset.Normalize();
+					Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y/(mag*mag));
+					rigidbody2D.velocity = rigidbody2D.velocity - force;
+				}
 			}
-			for(int i=0; i < holes.Length; i++){
-				Vector3 offset = transform.position - holes[i].transform.position;
-				float mag = offset.magnitude;
-				offset.Normalize();
-				Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y /(mag*mag));
-				rigidbody2D.velocity = rigidbody2D.velocity - force;
-				//rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,rigidbody2D.velocity.y);
+			if(holes != null){
+				for(int i=0; i < holes.Length; i++){
+					Vector3 offset = transform.position - holes[i].transform.position;
+					float mag = offset.magnitude;
+					offset.Normalize();
+					Vector2 force = new Vector2 (offset.x/(mag*mag), offset.y /(mag*mag));
+					rigidbody2D.velocity = rigidbody2D.velocity - force;
+					rigidbody2D.velocity = new Vector2((float)0.9995*rigidbody2D.velocity.x, (float)0.9995*rigidbody2D.velocity.y);
+				}
 			}
 			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
 		}

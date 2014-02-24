@@ -5,10 +5,10 @@ public class goalScript : MonoBehaviour {
 		
 	Collider2D firstCollider;
 	public bool showNextLevel = false;
+	public ParticleSystem goalEffect;
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
@@ -24,6 +24,9 @@ public class goalScript : MonoBehaviour {
 			rocketScript.isActive = false;
 			rocketScript.rigidbody2D.velocity = new Vector2 (0, 0);
 			rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
+			if(!showNextLevel){
+				goalEffect.Play();
+			}
 			showNextLevel = true;
 //			print("Game finished!");
 		}
