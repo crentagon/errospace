@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\C# Scripts\goalScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\C# Scripts\rocketMover.cs">
     <Files>
-      <File FileName="Assets\C# Scripts\gameStart.cs" Line="137" Column="5" />
-      <File FileName="Assets\C# Scripts\planetMover.cs" Line="12" Column="3" />
-      <File FileName="Assets\C# Scripts\rocketMover.cs" Line="21" Column="24" />
-      <File FileName="Assets\C# Scripts\goalScript.cs" Line="26" Column="39" />
+      <File FileName="Assets\C# Scripts\rocketMover.cs" Line="20" Column="18" />
+      <File FileName="Assets\C# Scripts\gameStart.cs" Line="127" Column="30" />
+      <File FileName="Assets\C# Scripts\planetMover.cs" Line="21" Column="17" />
+      <File FileName="Assets\C# Scripts\allLevels.cs" Line="17" Column="3" />
+      <File FileName="Assets\C# Scripts\goalScript.cs" Line="29" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

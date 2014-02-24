@@ -9,9 +9,17 @@ public class rocketMover : MonoBehaviour {
 	public bool isActive;
 	public Transform[] planets;
 	public Transform[] holes;
-	public Transform trail;
+	public ParticleSystem trail;
 	Collider2D firstCollider;
 	public int starCount = 0;
+
+	public void startTrail(){
+		trail.Play();
+	}
+
+	public void stopTrail(){
+		trail.Stop();
+	}
 
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
@@ -20,7 +28,8 @@ public class rocketMover : MonoBehaviour {
 	void OnColliderExit2D(Collider2D collider){
 		firstCollider = null;
 	}
-	void Update(){
+
+	void FixedUpdate(){
 		//print (firstCollider.transform.name);
 		if (firstCollider != null && firstCollider.transform.name == "Star") {
 			starCount+=1;
@@ -32,17 +41,21 @@ public class rocketMover : MonoBehaviour {
 			if(planets != null){
 				for(int i=0; i < planets.Length; i++){
 					Vector3 offset = transform.position - planets[i].transform.position;
-					float factor = 45.0f;
-					Vector2 force = - offset.normalized * factor / offset.sqrMagnitude;
+					float planetFactor = 45.0f;
+					Vector2 force = - offset.normalized * planetFactor / offset.sqrMagnitude;
 					rigidbody2D.AddForce(force);
 				}
 			}
 			if(holes != null){
 				for(int i=0; i < holes.Length; i++){
 					Vector3 offset = transform.position - holes[i].transform.position;
-					float factor = 65.0f;
-					Vector2 force = - offset.normalized * factor / offset.sqrMagnitude;
-					force = force - rigidbody2D.velocity * 0.1f;
+					float holeFactor = 65.0f;
+					float drag = 0.9f;
+					Vector2 force = - offset.normalized * holeFactor / offset.sqrMagnitude;
+					if(offset.magnitude < 4.0){ // If close enough, start culling speed
+						print("decreasing speed");
+						force = force - rigidbody2D.velocity * drag / offset.magnitude;
+					}					
 					rigidbody2D.AddForce(force);
 				}
 			}

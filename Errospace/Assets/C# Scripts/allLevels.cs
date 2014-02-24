@@ -14,7 +14,7 @@ public class allLevels : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.transform.name == "Rocket")
 			print ("Game over.");
-		//print ("No longer in contact with "+coll.transform.name);
+		print ("No longer in contact with "+coll.transform.name);
 	}
 
 	// Update is called once per frame

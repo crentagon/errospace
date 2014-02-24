@@ -26,6 +26,7 @@ public class goalScript : MonoBehaviour {
 			rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
 			if(!showNextLevel){
 				goalEffect.Play();
+				rocketScript.stopTrail();
 			}
 			showNextLevel = true;
 //			print("Game finished!");

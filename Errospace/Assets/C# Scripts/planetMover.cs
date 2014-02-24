@@ -24,7 +24,7 @@ public class planetMover : MonoBehaviour {
 			mousex = Input.mousePosition.x;
 			mousey = Input.mousePosition.y;
 			mousepos = Camera.main.ScreenToWorldPoint(new Vector2 (mousex,mousey));
-			print(mousepos);
+			//print(mousepos);
 			BlackBall.localPosition = mousepos;
 		}
 	}
