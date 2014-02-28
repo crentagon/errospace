@@ -7,25 +7,29 @@ public class rocketMover : MonoBehaviour {
 
 	public static float range = 10000;
 	public bool isActive;
-	public Transform planet;
-	public Transform planet2;
+	public Transform[] planets;
+	public Transform[] holes;
+	public ParticleSystem trail;
 	Collider2D firstCollider;
 	public int starCount = 0;
 
+	public void startTrail(){
+		trail.Play();
+	}
+
+	public void stopTrail(){
+		trail.Stop();
+	}
+
 	void OnTriggerEnter2D(Collider2D collider){
 		firstCollider = collider;
-
-
 	}
 	
 	void OnColliderExit2D(Collider2D collider){
 		firstCollider = null;
 	}
-	/*
-	void Start(){
-		rigidbody2D.velocity = new Vector2 (0, 2);
-	}*/
-	void Update(){
+
+	void FixedUpdate(){
 		//print (firstCollider.transform.name);
 		if (firstCollider != null && firstCollider.transform.name == "Star") {
 			starCount+=1;
@@ -34,28 +38,26 @@ public class rocketMover : MonoBehaviour {
 		}
 
 		if(isActive){
-			print("making trails.");
-			trailMaker.Instance.makeTrail(transform.position);
-			// firstCollider != null && firstCollider.transform.name != "LevelBoundaries" 
-			if(planet != null){
-				Vector3 offset = transform.position - planet.transform.position;
-				float mag = offset.magnitude;
-				offset.Normalize ();
-
-				print(offset);
-				Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
-				
-				rigidbody2D.velocity = rigidbody2D.velocity - force;
+			if(planets != null){
+				for(int i=0; i < planets.Length; i++){
+					Vector3 offset = transform.position - planets[i].transform.position;
+					float planetFactor = 45.0f;
+					Vector2 force = - offset.normalized * planetFactor / offset.sqrMagnitude;
+					rigidbody2D.AddForce(force);
+				}
 			}
-			if(planet2 != null){
-				Vector3 offset = transform.position - planet2.transform.position;
-				float mag = offset.magnitude;
-				offset.Normalize ();
-				
-				print(offset);
-				Vector2 force = new Vector2 (offset.x / mag / mag, offset.y / mag / mag);
-				
-				rigidbody2D.velocity = rigidbody2D.velocity - force;
+			if(holes != null){
+				for(int i=0; i < holes.Length; i++){
+					Vector3 offset = transform.position - holes[i].transform.position;
+					float holeFactor = 65.0f;
+					float drag = 0.9f;
+					Vector2 force = - offset.normalized * holeFactor / offset.sqrMagnitude;
+					if(offset.magnitude < 4.0){ // If close enough, start culling speed
+						print("decreasing speed");
+						force = force - rigidbody2D.velocity * drag / offset.magnitude;
+					}					
+					rigidbody2D.AddForce(force);
+				}
 			}
 			transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg*Mathf.Atan2(rigidbody2D.velocity.y,rigidbody2D.velocity.x)+270);
 		}

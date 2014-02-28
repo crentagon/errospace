@@ -38,12 +38,15 @@ public class gameStart : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if(onPause)
+	void FixedUpdate () {
+		rocketMover rocketScript = rocket.GetComponent<rocketMover>();
+		if(onPause) {
 			Time.timeScale = 0;
+			rocketScript.enabled = false;
+		}
 		else {
 			Time.timeScale = 1;
+			rocketScript.enabled = true;
 		}
 
 		if (Input.GetMouseButtonDown (1)) {
@@ -114,21 +117,25 @@ public class gameStart : MonoBehaviour {
 					
 					//Accessing the scripts of the other components.
 					rocketMover rocketScript = rocket.GetComponent<rocketMover>();
-					planetMover planetScript = planets.GetComponentInChildren<planetMover>();
 					
 					//Make the rocket respond to the gravity of other planets.
 					rocketScript.isActive = true;
 					
 					//Rocket lift off!
 					rocketScript.rigidbody2D.velocity = new Vector2 (0, startVelocity);
+
+					//Rocket fire and smoke!
+					rocketScript.startTrail();
 					
 					//Planets are no longer movable.
-					planetScript.isMovable = false;
+					planetMover[] planetScripts = planets.GetComponentsInChildren<planetMover>();
+					foreach(planetMover ps in planetScripts){
+						ps.isMovable = false;
+					}
+
 				}
 				GUI.Label(new Rect ((Screen.width-buttonWidth+7),(Screen.height-buttonHeight+10),buttonWidth, buttonHeight), "LAUNCH", textStyle);
 			}
-			
-
 		}
 	}
 }
