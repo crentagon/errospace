@@ -29,14 +29,6 @@ public class scrollScript : MonoBehaviour {
 
 			camPos += new Vector2 (-MouseX, -MouseY);
 			renderer.material.mainTextureOffset = camPos*smoothDrag;
-			//print (camPos);
-
-//			print (Time.time);
-//			renderer.material.mainTextureOffset = new Vector2 (Time.time*speed, 0f);
-			//renderer.material.mainTextureOffset = renderer.material.GetTextureOffset("_MainTex") + CameraPos;
-//			//print (renderer.material.GetTextureOffset("_MainTex"));
-//			//this.transform.position += CameraPos * smoothDrag;
 		}
-//		//renderer.material.mainTextureOffset = new Vector2 (Time.time*speed, 0f);
 	}
 }
