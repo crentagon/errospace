@@ -1,0 +1,44 @@
+List of things we have done so far:
+- Image Assets
+- Menu Screen
+- Stage and Level Selection Screen
+- Five stages
+- Blackhole stage
+
+- Relevant commits:
+	- Planet is now movable
+	- First level working. Home screen working. Run StarMenu.unity.
+	- added r^2 gravity in rocketMover.cs
+	- Starcount working. To-do next = save star progress
+	- Background images. To-do next: images for goal and rocket
+	- Dragging with left click + Zooming + Moving planets with right click now working.
+	- Rocket Rotation now working.
+	- Assets in the stage itself.
+	- Added Level03
+	- First two stages fully working with drag and shit. Also, title screen, level and stage selection screens partially working now.
+	- Added Level04 and black holes
+	- replaced gameObjects with prefabs, and fixed other scripts
+	- changed rocket gravity to addForce()
+	- fixed collider2D, fixed trailEffect, fixed prefabs, fixed black hole errors
+
+- Merges
+	- Cleaned up unused assets after merging kiefer branch
+	- Merge branch 'master' into kiefer
+	- Merge remote-tracking branch 'origin/master'
+	- uncomfortable merging with branch jeru
+	- Merged, I think. Pwede pa-pull-and-check?
+	- Merge branch 'kiefer' of https://github.com/tastelikecoke/errospace into kiefer
+	
+List of things we will deliver by the 22nd:
+- Two more stages:
+	- One with portals
+	- One with hexes (walls)
+- Sound effects
+- Finalized main menu and screen selections
+
+- Remaining Task Delegations
+	- Jeru: Physics god (rotation of planets)
+	- Jadu: Game logic
+	- Kiefer: Game logic
+	- Acezon: Stage designician (meet tayo bukas on how to design a stage)
+	- Errol: Soundician (lol pwede pa-aral kung paano maglagay ng sound sa Unity?)
