@@ -10,7 +10,11 @@ public class planetMover : MonoBehaviour {
 	void Start () {
 	
 	}
-	
+
+	void Awake(){
+		DontDestroyOnLoad (this.gameObject);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		//Vector3 offset = Rocket.position;
