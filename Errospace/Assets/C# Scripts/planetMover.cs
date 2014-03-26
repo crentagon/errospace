@@ -11,15 +11,13 @@ public class planetMover : MonoBehaviour {
 	
 	}
 
-	void Awake(){
-		DontDestroyOnLoad (this.gameObject);
-	}
 
 	// Update is called once per frame
 	void Update () {
 		//Vector3 offset = Rocket.position;
 		//rigidbody2D.velocity = rigidbody2D.velocity - (Vector2)offset;
 	}
+
 
 	void OnMouseDrag(){
 		if(isMovable){

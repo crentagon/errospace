@@ -1,0 +1,23 @@
+Remaining tasks (so far):
+- Two more stages:
+- One with portals
+- One with an asteroid belt
+- Sound effects
+- Finalized main menu and screen selection screens
+- Display amount of stars collected per stage (need assets for these)
+[x] The bug which flings the rocket away when you pause-resume. 
+[x] Clicking the reset button should only reset everything EXCEPT the position of the planets.
+[x] Bug: Pause > Main menu > the stars no longer move (...because the ENTIRE thing's still paused.)
+[x] Planet position bug
+[x] Display star count on screen while in a stage
+[x] Fix the first five stages
+[x] Game over on planet/blackhole collision
+- Write and Read from save file
+- On stage finish
+	- Display number of stars
+	- Options:
+		- Next level
+		- Redo stage
+- Game over screen 
+- Dragging bug (LOW PRIORITY)
+- Don't snap to grid (LOW PRIORITY)

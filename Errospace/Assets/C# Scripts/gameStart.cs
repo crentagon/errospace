@@ -5,6 +5,8 @@ public class gameStart : MonoBehaviour {
 
 	public Transform rocket;
 	public Transform planets;
+	public Transform stars;
+
 	public Camera mainCamera;
 	const float smooth = 0.2f;
 	const float smoothDrag = 0.7f;
@@ -18,15 +20,18 @@ public class gameStart : MonoBehaviour {
 	public Texture2D goIcon;
 	public Texture2D refreshIcon;
 	public Texture2D pauseIcon;
+	public Texture2D starIcon;
 
 	static bool onPause = false;
 	bool isGoButtonVisible = true;
 
 	GUIContent goContent = new GUIContent();
 	GUIStyle textStyle = new GUIStyle();
+	GUIStyle textStyleStars = new GUIStyle();
 	public Font gameFont;
 	private planetMover[] planetScripts;
 	private static Vector3[] planetPositions;
+	private int oldStarCount;
 
 	// Use this for initialization
 	void Start () {
@@ -35,10 +40,12 @@ public class gameStart : MonoBehaviour {
 		int i=0;
 
 		if(planetPositions != null){
+			print (Application.loadedLevel+": PLANET POSITIONS NOT NULL!");
 			foreach(planetMover ps in planetScripts){
 				ps.transform.localPosition = planetPositions[i];
 				i+=1;
 			}
+			planetPositions = new Vector3[0];
 		}
 	}
 
@@ -46,6 +53,26 @@ public class gameStart : MonoBehaviour {
 		goContent.image = goIcon;
 		textStyle.font = gameFont;
 		textStyle.normal.textColor = Color.white;
+		//int numPlanets = planets.childCount;
+		//planetPositions = new Vector3[numPlanets];
+
+		textStyleStars.font = gameFont;
+		textStyleStars.normal.textColor = Color.white;
+		textStyleStars.fontSize = 35;
+		oldStarCount = 3-stars.childCount;
+
+	}
+
+	void Update(){
+		//int starCount = stars.childCount;
+		int newStarCount = 3-stars.childCount;
+
+		if(newStarCount != oldStarCount){
+			oldStarCount = newStarCount;
+		}
+
+		//print ("Number of stars: "+starCount);
+		//GUI.Label();
 	}
 	
 	void FixedUpdate () {
@@ -77,6 +104,10 @@ public class gameStart : MonoBehaviour {
 		int miniButtonWidth = 32;
 		int miniButtonHeight = 32;
 
+		//GUI.Label( new Rect (100f,100f,0f, 0f), "x " + oldStarCount);
+
+		GUI.Label( new Rect (55f,20f,50f, 50f), "x " + oldStarCount, textStyleStars);
+		GUI.Label( new Rect (10f,10f,40f, 40f), new GUIContent(starIcon));
 		if (onPause) {
 			GUILayout.BeginArea (new Rect (Screen.width / 4, Screen.height / 4, Screen.width - Screen.width / 2, Screen.height / 2));
 			if (GUILayout.Button ("Resume")) {
@@ -105,30 +136,25 @@ public class gameStart : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,2*miniButtonHeight+20,miniButtonWidth,miniButtonHeight), new GUIContent(refreshIcon), guiStyle)) {
 				//Grab the positions of the planets, and reload the level, assigning the positions of the planets
 				//The following works, but it's a very super brute force implementation.
-				int numPlanets = 0;
+				/*int numPlanets = 0;
 				planetScripts = planets.GetComponentsInChildren<planetMover>();
 				//Count the number of planets
 				foreach(planetMover ps in planetScripts){
 					//print (ps.transform.localPosition);
 					numPlanets += 1;
 				}
-				
+				*/
+				int numPlanets = planets.childCount;
 				//Initialize array with that much number of planets, and store the planet's position.
 				planetPositions = new Vector3[numPlanets];
 				int i=0;
 				foreach(planetMover ps in planetScripts){
 					planetPositions[i] = ps.transform.localPosition;
-					print (planetPositions[i]);
 					i+=1;
 				}
-				print ("Number of planets: "+numPlanets);
 
 				//Reload the level
 				Application.LoadLevel(Application.loadedLevel);
-				//planetMover[] planetScripts = planets.GetComponentsInChildren<planetMover>();
-
-
-
 				print ("Reloaded the level!");
 			}
 			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,3*miniButtonHeight+25,miniButtonWidth,miniButtonHeight), new GUIContent(pauseIcon), guiStyle)) { //this shouldn't really be here
@@ -172,8 +198,17 @@ public class gameStart : MonoBehaviour {
 						ps.isMovable = false;
 					}
 
+					//Display starcount at bottomright corner
+					//int starCount = stars.childCount;
+					//print ("Number of stars: "+starCount);
+					//GUI.Label(new Rect(Screen.width/2, Screen.height*0.2f, 150f, 50f), OldStarCount);
+					//int Money = 3;
+
+					print ("x " + oldStarCount);
+					//GUI.Label(new Rect(10, 10, 140, 20), "YEAH!");
 				}
 				GUI.Label(new Rect ((Screen.width-buttonWidth+7),(Screen.height-buttonHeight+10),buttonWidth, buttonHeight), "LAUNCH", textStyle);
+
 			}
 		}
 	}

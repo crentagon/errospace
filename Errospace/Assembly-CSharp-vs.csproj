@@ -49,6 +49,7 @@
      <Compile Include="Assets\C# Scripts\GameScene_script.cs" />
      <Compile Include="Assets\C# Scripts\MainMenu_script.cs" />
      <Compile Include="Assets\C# Scripts\Pause_script.cs" />
+     <Compile Include="Assets\C# Scripts\Portal_script.cs" />
      <Compile Include="Assets\C# Scripts\SelectLevel_script.cs" />
      <Compile Include="Assets\C# Scripts\SelectStage_script.cs" />
      <Compile Include="Assets\C# Scripts\allLevels.cs" />
