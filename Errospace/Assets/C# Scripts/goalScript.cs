@@ -23,7 +23,7 @@ public class goalScript : MonoBehaviour {
 			rocketMover rocketScript = firstCollider.GetComponent<rocketMover>();
 			rocketScript.isActive = false;
 			rocketScript.rigidbody2D.velocity = new Vector2 (0, 0);
-			rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
+			//rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
 			if(!showNextLevel){
 				goalEffect.Play();
 				rocketScript.stopTrail();
