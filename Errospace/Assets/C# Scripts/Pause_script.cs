@@ -35,7 +35,7 @@ public class Pause_script : MonoBehaviour {
 					onPause = false;
 				}
 				if(GUILayout.Button("Galaxies")){
-					Application.LoadLevel("SelectStage");
+					Application.LoadLevel("SelectWorld");
 				}
 				if(GUILayout.Button("Settings")){
 					//gawa ng settings

@@ -51,7 +51,7 @@
      <Compile Include="Assets\C# Scripts\Pause_script.cs" />
      <Compile Include="Assets\C# Scripts\Portal_script.cs" />
      <Compile Include="Assets\C# Scripts\SelectLevel_script.cs" />
-     <Compile Include="Assets\C# Scripts\SelectStage_script.cs" />
+     <Compile Include="Assets\C# Scripts\SelectWorld_script.cs" />
      <Compile Include="Assets\C# Scripts\allLevels.cs" />
      <Compile Include="Assets\C# Scripts\gameStart.cs" />
      <Compile Include="Assets\C# Scripts\goalScript.cs" />
@@ -63,7 +63,6 @@
      <Compile Include="Assets\C# Scripts\trailMaker.cs" />
      <Compile Include="Assets\Managers\GameEventManager.cs" />
      <None Include="Assets\Fonts\read_me.txt" />
-     <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

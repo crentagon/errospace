@@ -7,13 +7,17 @@ MonoImporter:
   - planets: {instanceID: 0}
   - stars: {instanceID: 0}
   - mainCamera: {instanceID: 0}
-  - zoominIcon: {instanceID: 0}
-  - zoomoutIcon: {instanceID: 0}
-  - goIcon: {instanceID: 0}
-  - refreshIcon: {instanceID: 0}
-  - pauseIcon: {instanceID: 0}
-  - starIcon: {instanceID: 0}
-  - gameFont: {instanceID: 0}
+  - zoominIcon: {fileID: 2800000, guid: 225b6206fe6b91f468e6ecdb9086ade0, type: 3}
+  - zoomoutIcon: {fileID: 2800000, guid: ee9067d55eeb9ee4fa7386d0d66d238f, type: 3}
+  - goIcon: {fileID: 2800000, guid: 5e896d6d466110d4f9e9e1412400cac0, type: 3}
+  - refreshIcon: {fileID: 2800000, guid: 4a018b1e7657f1b4790bd4d4c27ca821, type: 3}
+  - pauseIcon: {fileID: 2800000, guid: 704e0b84a8f7aea4396c5993916f0a27, type: 3}
+  - starIcon: {fileID: 2800000, guid: b5396801d5438594394e1bce4e269793, type: 3}
+  - pauseWindow: {fileID: 2800000, guid: fe42fe8c5d3796542afd6c34c53dde82, type: 3}
+  - buttonResume: {fileID: 2800000, guid: 228bdb6c1357010458394ac65d9c747c, type: 3}
+  - buttonStages: {fileID: 2800000, guid: 7a777eac4fccdc7468e4aaae9dc5dad6, type: 3}
+  - buttonMainMenu: {fileID: 2800000, guid: 3c0fe720c943d6343905d82dcc7f12b7, type: 3}
+  - gameFont: {fileID: 12800000, guid: 2d392d6a986e15348b0ffdd73b1b2abf, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

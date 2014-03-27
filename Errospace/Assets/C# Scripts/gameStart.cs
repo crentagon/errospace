@@ -22,7 +22,12 @@ public class gameStart : MonoBehaviour {
 	public Texture2D pauseIcon;
 	public Texture2D starIcon;
 
-	static bool onPause = false;
+	public Texture2D pauseWindow;
+	public Texture2D buttonResume;
+	public Texture2D buttonStages;
+	public Texture2D buttonMainMenu;
+
+	public static bool onPause = false;
 	bool isGoButtonVisible = true;
 
 	GUIContent goContent = new GUIContent();
@@ -109,29 +114,45 @@ public class gameStart : MonoBehaviour {
 		GUI.Label( new Rect (55f,20f,50f, 50f), "x " + oldStarCount, textStyleStars);
 		GUI.Label( new Rect (10f,10f,40f, 40f), new GUIContent(starIcon));
 		if (onPause) {
-			GUILayout.BeginArea (new Rect (Screen.width / 4, Screen.height / 4, Screen.width - Screen.width / 2, Screen.height / 2));
-			if (GUILayout.Button ("Resume")) {
+			GUIStyle guiStyle = new GUIStyle();
+			guiStyle.padding = new RectOffset(0,0,0,0);
+
+			GUI.Label( new Rect (((Screen.width/2)-(Screen.width*25/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*4/5,Screen.height*4/5), new GUIContent(pauseWindow));
+			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*1/13)),Screen.width*3/8,Screen.height*3/25), buttonResume, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 			}
-			if (GUILayout.Button ("Galaxies")) {
+			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-1/18)),Screen.width*3/8,Screen.height*3/25), buttonStages, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
-				Application.LoadLevel ("SelectStage");
+				Application.LoadLevel ("SelectWorld");
 			}
-			if (GUILayout.Button ("Settings")) {
-				//gawa ng settings
-			}
-			if (GUILayout.Button ("Main Menu")) {
-				Time.timeScale = 1;
+			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-27/144)),Screen.width*3/8,Screen.height*3/25), buttonMainMenu, guiStyle)){
 				onPause = false;
+				Time.timeScale = 1;
 				Application.LoadLevel ("MainMenu");
 			}
-			GUILayout.EndArea ();
+//			GUILayout.BeginArea (new Rect (Screen.width / 4, Screen.height / 4, Screen.width - Screen.width / 2, Screen.height / 2));
+//			if (GUILayout.Button ("Resume")) {
+//				onPause = false;
+//				Time.timeScale = 1;
+//			}
+//			if (GUILayout.Button ("Galaxies")) {
+//				onPause = false;
+//				Time.timeScale = 1;
+//				Application.LoadLevel ("SelectStage");
+//			}
+//			if (GUILayout.Button ("Main Menu")) {
+//				Time.timeScale = 1;
+//				onPause = false;
+//				Application.LoadLevel ("MainMenu");
+//			}
+//			GUILayout.EndArea ();
 		} else {
 			GUIStyle guiStyle = new GUIStyle();
 			guiStyle.padding = new RectOffset(0,0,0,0);
-			
+
+		
 			//The pause/refresh icons
 			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,2*miniButtonHeight+20,miniButtonWidth,miniButtonHeight), new GUIContent(refreshIcon), guiStyle)) {
 				//Grab the positions of the planets, and reload the level, assigning the positions of the planets

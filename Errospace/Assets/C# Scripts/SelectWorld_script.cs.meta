@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 14a19ea5af6705d45adfbf16c612450b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - iconLevel01: {fileID: 2800000, guid: 2ff8810a194567a49bb55948676e501c, type: 3}
+  - iconLevel02: {fileID: 2800000, guid: 95a401634075a4d459426ac9741fd450, type: 3}
+  - iconLevel03: {fileID: 2800000, guid: f4a7c8a5ccdd45441a057c920c0618c5, type: 3}
+  - iconLevel04: {fileID: 2800000, guid: 6bafc4d8af333b144a6277df2bcdf081, type: 3}
+  - iconLockedLevel: {fileID: 2800000, guid: 0c9e8d78ee9e7314a8ff9012c7d0c51c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
