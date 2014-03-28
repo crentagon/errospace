@@ -15,13 +15,17 @@ public class SelectWorld_script : MonoBehaviour {
 	public Texture2D iconWorldC;
 	public Texture2D iconWorldD;
 	public Texture2D iconLockedLevel;
-	
+
+	public Texture2D iconBack;
+
 	GUIContent buttonWorldA = new GUIContent();
 	GUIContent buttonWorldB = new GUIContent();
 	GUIContent buttonWorldC = new GUIContent();
 	GUIContent buttonWorldD = new GUIContent();
 	GUIContent buttonLockedLevel = new GUIContent();
-	
+
+	GUIContent buttonBack = new GUIContent ();
+
 	public Font gameFont;
 	GUIStyle textStyle = new GUIStyle();
 
@@ -37,7 +41,9 @@ public class SelectWorld_script : MonoBehaviour {
 		buttonWorldC.image = iconWorldC;
 		buttonWorldD.image = iconWorldD;
 		buttonLockedLevel.image = iconLockedLevel;
-		
+
+		buttonBack.image = iconBack;
+
 		textStyle.font = gameFont;
 		textStyle.normal.textColor = Color.white;
 
@@ -86,9 +92,16 @@ public class SelectWorld_script : MonoBehaviour {
 		Rect coordWorldC = new Rect (((Screen.width/2)-(Screen.width*-17/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*2/7,Screen.height*2/7);
 		Rect coordWorldD = new Rect (((Screen.width/2)-(Screen.width*21/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*2/7,Screen.height*2/7);
 
+		Rect coordButtonBack = new Rect (10, (Screen.height - Screen.height * 1 / 9 - 10), Screen.width * 1/3, Screen.height * 1/9);
+		//Rect coordButtonBack = new Rect ((Screen.width / 2) - (Screen.width * 1 / 14), (Screen.height - Screen.height * 1 / 9 - 10), Screen.width * 1/3, Screen.height * 1/9);
+
 		bool willShowScoreB = false;
 		bool willShowScoreC = false;
 		bool willShowScoreD = false;
+
+		if (GUI.Button (coordButtonBack, buttonBack, guiStyle)) {
+			Application.LoadLevel("MainMenu");
+		}
 
 		if(GUI.Button (coordWorldA, buttonWorldA, guiStyle)){
 			Application.LoadLevel("WorldA");

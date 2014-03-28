@@ -15,13 +15,17 @@ public class SelectLevel_script : MonoBehaviour {
 
 	public Texture2D iconStarsFull;
 	public Texture2D iconStarsEmpty;
-	
+
+	public Texture2D iconBack;
+
 	GUIContent buttonLevel01 = new GUIContent();
 	GUIContent buttonLevel02 = new GUIContent();
 	GUIContent buttonLevel03 = new GUIContent();
 	GUIContent buttonLevel04 = new GUIContent();
 	GUIContent buttonLockedLevel = new GUIContent();
-	
+
+	GUIContent buttonBack = new GUIContent ();
+
 	private int stageCountWorldA = 4;
 	private int stageCountWorldB = 2;
 	private int stageCountWorldC = 2;
@@ -36,7 +40,9 @@ public class SelectLevel_script : MonoBehaviour {
 		buttonLevel03.image = iconLevel03;
 		buttonLevel04.image = iconLevel04;
 		buttonLockedLevel.image = iconLockedLevel;
-		
+
+		buttonBack.image = iconBack;
+
 //		textStyle.font = gameFont;
 //		textStyle.normal.textColor = Color.white;
 //		textStyle.fontSize = 20;
@@ -131,6 +137,12 @@ public class SelectLevel_script : MonoBehaviour {
 		Rect coordsLevel03 = new Rect (((Screen.width/2)-(Screen.width*-17/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*2/7,Screen.height*2/7);
 		Rect coordsLevel04 = new Rect (((Screen.width/2)-(Screen.width*21/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*2/7,Screen.height*2/7);
 		Rect coordsLevel05 = new Rect (((Screen.width/2)-(Screen.width*-4/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*2/7,Screen.height*2/7);
+
+		Rect coordButtonBack = new Rect (10, (Screen.height - Screen.height * 1 / 9 - 10), Screen.width * 1/3, Screen.height * 1/9);
+
+		if (GUI.Button (coordButtonBack, buttonBack, guiStyle)) {
+			Application.LoadLevel("SelectWorld");
+		}
 
 		if(GUI.Button (coordsLevel01, buttonLevel01, guiStyle)){
 			Application.LoadLevel("Level"+world+"1");
