@@ -11,14 +11,17 @@ public class MainMenu_script : MonoBehaviour {
 	GUIContent play = new GUIContent();
 	GUIContent exit = new GUIContent();
 
-	float nativeWidth = 1280;
-	float nativeHeight = 800;
-	 
+	private float width;
+	private float height;
+		 
 	// Use this for initialization
 	void Start () {
 		title.image = titleBanner;
 		play.image = buttonPlay;
 		exit.image = buttonExit;
+
+		width = 1280;
+		height = 800;
 	}
 	
 	// Update is called once per frame
@@ -29,33 +32,32 @@ public class MainMenu_script : MonoBehaviour {
 	void OnGUI () {
 		GUIStyle noStyle = new GUIStyle();
 
-		float rx = Screen.width / nativeWidth;
-		float ry = Screen.height / nativeHeight;
+		float rx = Screen.width / width;
+		float ry = Screen.height / height;
 
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(ry, ry, 1));
-		float adjustedWidth = nativeWidth * (rx/ry);
+		float adjustedWidth = width * (rx/ry);
 
-		GUI.Label (new Rect((nativeWidth - 500)/2, (nativeHeight - 200)/2 - 100, 500, 200), title);
+		Rect labelRect = new Rect(
+			(width - titleBanner.width)/2,
+			(height - titleBanner.height)/2 - 100,
+			titleBanner.width,
+			titleBanner.height);
+		Rect playRect = new Rect(
+			(width - buttonPlay.width)/2,
+			(height - buttonPlay.height)/2,
+			buttonPlay.width,
+			buttonPlay.height);
+		Rect exitRect = new Rect(
+			(width - buttonExit.width)/2,
+			(height - buttonExit.height)/2 + 125,
+			buttonExit.width,
+			buttonExit.height);
 
-		if(GUI.Button(new Rect((nativeWidth - 300)/2, (nativeHeight - 100)/2 , 300, 100), play, noStyle)){
+		GUI.Label(labelRect, title);
+		if(GUI.Button(playRect, play, noStyle))
 			Application.LoadLevel("SelectWorld");
-		}
-		
-		if(GUI.Button(new Rect((nativeWidth - 300)/2, (nativeHeight - 100)/2 + 125, 300, 100), exit, noStyle)){
-			Application.Quit ();
-		}
-
-
-//		var buttonWidth = 300;
-//		var buttonHeight = 35;
-//
-//		if (GUI.Button (new Rect ((Screen.width-buttonWidth)/2,(Screen.height-buttonHeight+50)/2, Screen.width/2, buttonHeight), "PLAY")) {
-//			Application.LoadLevel("SelectLevel");
-//		}
-//
-//		if(GUI.Button (new Rect(20, Screen.height-buttonHeight-20, 35, 35),"EXIT")){
-//			Application.Quit();
-//
-//		}
+		if(GUI.Button(exitRect, exit, noStyle))
+			Application.Quit();
 	}
 }
