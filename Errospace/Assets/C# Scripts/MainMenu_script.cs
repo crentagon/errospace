@@ -10,7 +10,7 @@ public class MainMenu_script : MonoBehaviour {
 	GUIContent title = new GUIContent();
 	GUIContent play = new GUIContent();
 	GUIContent exit = new GUIContent();
-
+	 
 	// Use this for initialization
 	void Start () {
 		title.image = titleBanner;
@@ -24,18 +24,19 @@ public class MainMenu_script : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		GUIStyle guiStyle = new GUIStyle();
-		guiStyle.padding = new RectOffset(0,0,0,0);
+		GUIStyle centeredStyle = GUI.skin.GetStyle("Label");
+		centeredStyle.alignment = TextAnchor.UpperCenter;
 
-		GUI.Label (new Rect (((Screen.width / 2) - (Screen.width * 17 / 64)), ((Screen.height / 2) - (Screen.height * 5 / 13)), Screen.width * 15/16, Screen.height * 3/8), title, guiStyle);
+		GUI.Label (new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), title, centeredStyle);
 
-		if(GUI.Button(new Rect (((Screen.width / 2) - (Screen.width * 1 / 8)), ((Screen.height / 2) - (Screen.height * 1 / 16)), Screen.width * 1/2, Screen.height * 1/6), play, guiStyle)){
+		if(GUI.Button(new Rect(Screen.width/3, Screen.height/3, Screen.width/4, Screen.height/4), play, centeredStyle)){
 			Application.LoadLevel("SelectWorld");
 		}
 
-		if(GUI.Button(new Rect (((Screen.width / 2) - (Screen.width * 1 / 14)), ((Screen.height / 2) - (Screen.height * -2 / 16)), Screen.width * 1/3, Screen.height * 1/9), exit, guiStyle)){
+		if(GUI.Button(new Rect(Screen.width/3, Screen.height/2, Screen.width/4, Screen.height/4), exit, centeredStyle)){
 			Application.Quit ();
 		}
+
 
 //		var buttonWidth = 300;
 //		var buttonHeight = 35;
