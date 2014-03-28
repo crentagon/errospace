@@ -10,6 +10,9 @@ public class MainMenu_script : MonoBehaviour {
 	GUIContent title = new GUIContent();
 	GUIContent play = new GUIContent();
 	GUIContent exit = new GUIContent();
+
+	float nativeWidth = 1280;
+	float nativeHeight = 800;
 	 
 	// Use this for initialization
 	void Start () {
@@ -24,16 +27,21 @@ public class MainMenu_script : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		GUIStyle centeredStyle = GUI.skin.GetStyle("Label");
-		centeredStyle.alignment = TextAnchor.UpperCenter;
+		GUIStyle noStyle = new GUIStyle();
 
-		GUI.Label (new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), title, centeredStyle);
+		float rx = Screen.width / nativeWidth;
+		float ry = Screen.height / nativeHeight;
 
-		if(GUI.Button(new Rect(Screen.width/3, Screen.height/3, Screen.width/4, Screen.height/4), play, centeredStyle)){
+		GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(ry, ry, 1));
+		float adjustedWidth = nativeWidth * (rx/ry);
+
+		GUI.Label (new Rect((nativeWidth - 500)/2, (nativeHeight - 200)/2 - 100, 500, 200), title);
+
+		if(GUI.Button(new Rect((nativeWidth - 300)/2, (nativeHeight - 100)/2 , 300, 100), play, noStyle)){
 			Application.LoadLevel("SelectWorld");
 		}
-
-		if(GUI.Button(new Rect(Screen.width/3, Screen.height/2, Screen.width/4, Screen.height/4), exit, centeredStyle)){
+		
+		if(GUI.Button(new Rect((nativeWidth - 300)/2, (nativeHeight - 100)/2 + 125, 300, 100), exit, noStyle)){
 			Application.Quit ();
 		}
 
