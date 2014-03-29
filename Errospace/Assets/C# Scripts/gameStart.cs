@@ -12,6 +12,9 @@ public class gameStart : MonoBehaviour {
 	const float smoothDrag = 0.7f;
 	const int maxZoom = 2;
 
+	private float width;
+	private float height;
+
 	private Vector3 prevCamPos;
 	private Vector3 mouseDownPos;
 
@@ -33,6 +36,7 @@ public class gameStart : MonoBehaviour {
 	GUIContent goContent = new GUIContent();
 	GUIStyle textStyle = new GUIStyle();
 	GUIStyle textStyleStars = new GUIStyle();
+
 	public Font gameFont;
 	private planetMover[] planetScripts;
 	private static Vector3[] planetPositions;
@@ -52,20 +56,23 @@ public class gameStart : MonoBehaviour {
 			}
 			planetPositions = new Vector3[0];
 		}
+
+		width = 1280;
+		height = 800;
 	}
 
 	void Awake(){
 		goContent.image = goIcon;
+
 		textStyle.font = gameFont;
 		textStyle.normal.textColor = Color.white;
-		//int numPlanets = planets.childCount;
-		//planetPositions = new Vector3[numPlanets];
+		textStyle.fontSize = 18;
 
 		textStyleStars.font = gameFont;
 		textStyleStars.normal.textColor = Color.white;
 		textStyleStars.fontSize = 35;
-		oldStarCount = 3-stars.childCount;
 
+		oldStarCount = 3-stars.childCount;
 	}
 
 	void Update(){
@@ -101,102 +108,141 @@ public class gameStart : MonoBehaviour {
 		}
 	}
 
+	void DrawQuad(Rect position, Color color) {
+		color.a = 0.5f;
+		Texture2D texture = new Texture2D(1, 1);
+		texture.SetPixel(0,0,color);
+		texture.Apply();
+		GUI.skin.box.normal.background = texture;
+		GUI.Box(position, GUIContent.none);
+	}
+
 	void OnGUI () {
-		int buttonWidth = 100;
-		int buttonHeight = 50;
 		int startVelocity = 4;
 		
 		int miniButtonWidth = 32;
 		int miniButtonHeight = 32;
 
-		//GUI.Label( new Rect (100f,100f,0f, 0f), "x " + oldStarCount);
+		GUIStyle guiStyle = new GUIStyle();
+		
+		float rx = Screen.width / width;
+		float ry = Screen.height / height;
+		
+		GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(ry, ry, 1));
+		float adjustedWidth = width * (rx/ry);
 
-		GUI.Label( new Rect (55f,20f,50f, 50f), "x " + oldStarCount, textStyleStars);
-		GUI.Label( new Rect (10f,10f,40f, 40f), new GUIContent(starIcon));
+		GUI.Label(new Rect(55f,20f,50f, 50f), "x " + oldStarCount, textStyleStars);
+		GUI.Label(new Rect(10f,10f,40f, 40f), new GUIContent(starIcon));
+
 		if (onPause) {
-			GUIStyle guiStyle = new GUIStyle();
-			guiStyle.padding = new RectOffset(0,0,0,0);
+			Rect pauseRect = new Rect(
+				(width - pauseWindow.width)/2,
+				(height - pauseWindow.height)/2,
+				pauseWindow.width,
+				pauseWindow.height);
+			Rect resumeRect = new Rect(
+				(width - buttonResume.width)/2,
+				(height - buttonResume.height)/2 - 60,
+				buttonResume.width,
+				buttonResume.height);
+			Rect stagesRect = new Rect(
+				(width - buttonResume.width)/2,
+				resumeRect.y + buttonResume.height + 10,
+				buttonResume.width,
+				buttonResume.height);
+			Rect mainmenuRect = new Rect(
+				(width - buttonResume.width)/2,
+				stagesRect.y + buttonResume.height + 10,
+				buttonResume.width,
+				buttonResume.height);
 
-			GUI.Label( new Rect (((Screen.width/2)-(Screen.width*25/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*4/5,Screen.height*4/5), new GUIContent(pauseWindow));
-			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*1/13)),Screen.width*3/8,Screen.height*3/25), buttonResume, guiStyle)){
+			DrawQuad(new Rect(0,0,width,height), Color.black);
+
+			GUI.Label(pauseRect, new GUIContent(pauseWindow));
+			if(GUI.Button(resumeRect, buttonResume, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 			}
-			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-1/18)),Screen.width*3/8,Screen.height*3/25), buttonStages, guiStyle)){
+			if(GUI.Button(stagesRect, buttonStages, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 				Application.LoadLevel ("SelectWorld");
 			}
-			if(GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-27/144)),Screen.width*3/8,Screen.height*3/25), buttonMainMenu, guiStyle)){
+			if(GUI.Button(mainmenuRect, buttonMainMenu, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 				Application.LoadLevel ("MainMenu");
 			}
-//			GUILayout.BeginArea (new Rect (Screen.width / 4, Screen.height / 4, Screen.width - Screen.width / 2, Screen.height / 2));
-//			if (GUILayout.Button ("Resume")) {
-//				onPause = false;
-//				Time.timeScale = 1;
-//			}
-//			if (GUILayout.Button ("Galaxies")) {
-//				onPause = false;
-//				Time.timeScale = 1;
-//				Application.LoadLevel ("SelectStage");
-//			}
-//			if (GUILayout.Button ("Main Menu")) {
-//				Time.timeScale = 1;
-//				onPause = false;
-//				Application.LoadLevel ("MainMenu");
-//			}
-//			GUILayout.EndArea ();
-		} else {
-			GUIStyle guiStyle = new GUIStyle();
-			guiStyle.padding = new RectOffset(0,0,0,0);
+		}
+		else {
+			// Define object bounds
+			Rect zoomoutRect = new Rect(
+				(width - zoomoutIcon.width - 10),
+				10,
+				zoomoutIcon.width,
+				zoomoutIcon.height);
+			Rect zoominRect = new Rect(
+				(width - zoominIcon.width - 10),
+				zoominIcon.height + 20,
+				zoominIcon.width,
+				zoominIcon.height);
+			Rect refreshRect = new Rect(
+				(width - refreshIcon.width - 10),
+				refreshIcon.height*2 + 30,
+				refreshIcon.width,
+				refreshIcon.height);
+			Rect pauseRect = new Rect(
+				(width - pauseIcon.width - 10),
+				pauseIcon.height*3 + 40,
+				pauseIcon.width,
+				pauseIcon.height);
+			Rect launchButtonRect = new Rect(
+				(width - goIcon.width - 10),
+				(height - goIcon.height - 10),
+				goIcon.width,
+				goIcon.height);
+			Rect launchTextRect = new Rect(
+				(width - goIcon.width + 12),
+				(height - goIcon.height + 18),
+				goIcon.width,
+				goIcon.height);
 
-		
-			//The pause/refresh icons
-			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,2*miniButtonHeight+20,miniButtonWidth,miniButtonHeight), new GUIContent(refreshIcon), guiStyle)) {
+			//Zoom out button
+			if (GUI.RepeatButton (zoomoutRect, new GUIContent(zoomoutIcon), guiStyle)) {
+				mainCamera.orthographicSize += smooth;
+			}
+
+			//Zoom in button
+			if (GUI.RepeatButton (zoominRect, new GUIContent(zoominIcon), guiStyle)) {
+				if(mainCamera.orthographicSize > maxZoom)
+					mainCamera.orthographicSize -= smooth;
+			}
+
+			//Refresh button
+			if (GUI.Button (refreshRect, new GUIContent(refreshIcon), guiStyle)) {
 				//Grab the positions of the planets, and reload the level, assigning the positions of the planets
-				//The following works, but it's a very super brute force implementation.
-				/*int numPlanets = 0;
-				planetScripts = planets.GetComponentsInChildren<planetMover>();
-				//Count the number of planets
-				foreach(planetMover ps in planetScripts){
-					//print (ps.transform.localPosition);
-					numPlanets += 1;
-				}
-				*/
 				int numPlanets = planets.childCount;
 				//Initialize array with that much number of planets, and store the planet's position.
 				planetPositions = new Vector3[numPlanets];
-				int i=0;
+				int i = 0;
 				foreach(planetMover ps in planetScripts){
 					planetPositions[i] = ps.transform.localPosition;
-					i+=1;
+					i += 1;
 				}
 
 				//Reload the level
 				Application.LoadLevel(Application.loadedLevel);
 				print ("Reloaded the level!");
 			}
-			if (GUI.Button (new Rect (Screen.width-miniButtonWidth-10,3*miniButtonHeight+25,miniButtonWidth,miniButtonHeight), new GUIContent(pauseIcon), guiStyle)) { //this shouldn't really be here
+
+			//Pause button
+			if (GUI.Button (pauseRect, new GUIContent(pauseIcon), guiStyle)) {
 				onPause = true;
 			}
-			
-			//The zoomin, zoomout icons
-			if (GUI.RepeatButton (new Rect (Screen.width-miniButtonWidth-10,10,miniButtonWidth, miniButtonWidth), new GUIContent(zoomoutIcon), guiStyle)) {
-				mainCamera.orthographicSize+=smooth;
-			}
-			if (GUI.RepeatButton (new Rect (Screen.width-miniButtonWidth-10,miniButtonHeight+15, miniButtonWidth, miniButtonHeight), new GUIContent(zoominIcon), guiStyle)) {
-				if(mainCamera.orthographicSize>maxZoom)
-					mainCamera.orthographicSize-=smooth;
-			}
-			
-			//The "GO" Button!
-			if(isGoButtonVisible){
-				GUIStyle goGuiStyle = new GUIStyle();
-				goGuiStyle.padding = new RectOffset(0,0,0,0);
 
-				if (GUI.Button (new Rect ((Screen.width-buttonWidth-10),(Screen.height-buttonHeight-10),buttonWidth, buttonHeight), goContent, goGuiStyle)) {
+			//Launch button
+			if(isGoButtonVisible){
+				if (GUI.Button (launchButtonRect, goContent, guiStyle)) {
 					//Hide this button.
 					isGoButtonVisible = false;				
 					//print ("After: "+isGoButtonVisible);
@@ -219,16 +265,9 @@ public class gameStart : MonoBehaviour {
 						ps.isMovable = false;
 					}
 
-					//Display starcount at bottomright corner
-					//int starCount = stars.childCount;
-					//print ("Number of stars: "+starCount);
-					//GUI.Label(new Rect(Screen.width/2, Screen.height*0.2f, 150f, 50f), OldStarCount);
-					//int Money = 3;
-
 					print ("x " + oldStarCount);
-					//GUI.Label(new Rect(10, 10, 140, 20), "YEAH!");
 				}
-				GUI.Label(new Rect ((Screen.width-buttonWidth+7),(Screen.height-buttonHeight+10),buttonWidth, buttonHeight), "LAUNCH", textStyle);
+				GUI.Label(launchTextRect, "LAUNCH!", textStyle);
 
 			}
 		}
