@@ -16,6 +16,12 @@ public class rocketMover : MonoBehaviour {
 	private planetMover[] planetScripts;
 	private static Vector3[] planetPositions;
 
+	public AudioClip clipStar;
+	public AudioClip clipLose;
+	public AudioClip clipPortal;
+
+	private bool willWait = true;
+
 	public void startTrail(){
 		trail.Play();
 	}
@@ -30,6 +36,17 @@ public class rocketMover : MonoBehaviour {
 	
 	void OnColliderExit2D(Collider2D collider){
 		firstCollider = null;
+	}
+
+	IEnumerator waitGameOver(){
+		while(willWait){
+			audio.PlayOneShot(clipLose);
+			this.isActive = false;
+			this.stopTrail();
+			yield return new WaitForSeconds(1.0f);
+			willWait = false;
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 
 	void Start () {
@@ -53,6 +70,7 @@ public class rocketMover : MonoBehaviour {
 		if(isActive){
 			
 			if (firstCollider != null && firstCollider.transform.name == "Star") {
+				audio.PlayOneShot(clipStar);
 				starCount+=1;
 				Destroy(firstCollider.gameObject);
 				firstCollider = null;
@@ -69,8 +87,8 @@ public class rocketMover : MonoBehaviour {
 						}
 
 						print ("Collided with: "+planets[i].transform.name+" Position: "+planets[i].transform.localPosition);
-						
-						Application.LoadLevel(Application.loadedLevel);
+
+						StartCoroutine(waitGameOver());
 					}
 				}
 
@@ -81,7 +99,8 @@ public class rocketMover : MonoBehaviour {
 						for(int j=0; j<planets.Length; j++){
 							planetPositions[j] = planets[j].transform.localPosition;
 						}
-						Application.LoadLevel(Application.loadedLevel);
+
+						StartCoroutine(waitGameOver());
 					}
 				}
 
@@ -91,7 +110,8 @@ public class rocketMover : MonoBehaviour {
 					for(int j=0; j<planets.Length; j++){
 						planetPositions[j] = planets[j].transform.localPosition;
 					}
-					Application.LoadLevel(Application.loadedLevel);
+					
+					StartCoroutine(waitGameOver());
 				}
 
 				//If it hits a portal
@@ -102,6 +122,8 @@ public class rocketMover : MonoBehaviour {
 					if(portalName.Substring(9) == "1"){
 						var otherPortal = GameObject.Find (portalName.Substring(0, 9)+"2");
 						this.transform.localPosition = otherPortal.transform.localPosition;
+
+						audio.PlayOneShot(clipPortal);
 					}
 				}
 

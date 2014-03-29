@@ -18,14 +18,20 @@ public class MainMenu_script : MonoBehaviour {
 	private Rect playRect;
 	private Rect exitRect;
 		 
+	public AudioClip clipClick;
+	//private AudioSource sourceClick;
+
+	private bool willWait = true;
+
 	// Use this for initialization
 	void Start () {
+		//sourceClick.clip = clipClick;
 		title.image = titleBanner;
 		play.image = buttonPlay;
 		exit.image = buttonExit;
 
-		width = 1280;
-		height = 800;
+		width = Screen.width;
+		height = Screen.height;
 
 		labelRect = new Rect(
 			(width - titleBanner.width)/2,
@@ -49,6 +55,16 @@ public class MainMenu_script : MonoBehaviour {
 	
 	}
 
+	IEnumerator waitSelectWorld(){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;
+			Application.LoadLevel("SelectWorld");
+		}
+	}
+
+	
 	void OnGUI () {
 		GUIStyle noStyle = new GUIStyle();
 
@@ -60,7 +76,7 @@ public class MainMenu_script : MonoBehaviour {
 
 		GUI.Label(labelRect, title);
 		if(GUI.Button(playRect, play, noStyle))
-			Application.LoadLevel("SelectWorld");
+			StartCoroutine(waitSelectWorld());
 		if(GUI.Button(exitRect, exit, noStyle))
 			Application.Quit();
 	}

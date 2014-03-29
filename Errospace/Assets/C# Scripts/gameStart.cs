@@ -30,17 +30,24 @@ public class gameStart : MonoBehaviour {
 	public Texture2D buttonStages;
 	public Texture2D buttonMainMenu;
 
+	public string levelName;
+
 	public static bool onPause = false;
+	public bool showSideButtons = true;
 	bool isGoButtonVisible = true;
 
 	GUIContent goContent = new GUIContent();
-	GUIStyle textStyle = new GUIStyle();
 	GUIStyle textStyleStars = new GUIStyle();
 
 	public Font gameFont;
 	private planetMover[] planetScripts;
 	private static Vector3[] planetPositions;
 	private int oldStarCount;
+
+	public AudioClip clipClick;
+	public AudioClip clipPause;
+
+	private bool willWait = true;
 
 	// Use this for initialization
 	void Start () {
@@ -57,16 +64,12 @@ public class gameStart : MonoBehaviour {
 			planetPositions = new Vector3[0];
 		}
 
-		width = 1280;
-		height = 800;
+		width = Screen.width;
+		height = Screen.height;
 	}
 
 	void Awake(){
 		goContent.image = goIcon;
-
-		textStyle.font = gameFont;
-		textStyle.normal.textColor = Color.white;
-		textStyle.fontSize = 18;
 
 		textStyleStars.font = gameFont;
 		textStyleStars.normal.textColor = Color.white;
@@ -75,6 +78,24 @@ public class gameStart : MonoBehaviour {
 		oldStarCount = 3-stars.childCount;
 	}
 
+	IEnumerator waitSelectScene(string selectedScene){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;
+			Application.LoadLevel(selectedScene);
+		}
+	}
+	
+	IEnumerator waitReloadLevel(){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;			
+			Application.LoadLevel(Application.loadedLevel);
+		}
+	}
+	
 	void Update(){
 		//int starCount = stars.childCount;
 		int newStarCount = 3-stars.childCount;
@@ -118,9 +139,6 @@ public class gameStart : MonoBehaviour {
 
 	void OnGUI () {
 		int startVelocity = 4;
-		
-		int miniButtonWidth = 32;
-		int miniButtonHeight = 32;
 
 		GUIStyle guiStyle = new GUIStyle();
 		
@@ -174,14 +192,14 @@ public class gameStart : MonoBehaviour {
 			if(GUI.Button(stagesRect, buttonStages, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
-				Application.LoadLevel ("SelectWorld");
+				StartCoroutine(waitSelectScene("SelectWorld"));
 			}
 
 			// Main menu button
 			if(GUI.Button(mainmenuRect, buttonMainMenu, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
-				Application.LoadLevel ("MainMenu");
+				StartCoroutine(waitSelectScene("MainMenu"));
 			}
 		}
 		else {
@@ -211,21 +229,19 @@ public class gameStart : MonoBehaviour {
 				(height - goIcon.height - 10),
 				goIcon.width,
 				goIcon.height);
-			Rect launchTextRect = new Rect(
-				(width - goIcon.width + 12),
-				(height - goIcon.height + 18),
-				goIcon.width,
-				goIcon.height);
 
 			//Zoom out button
 			if (GUI.RepeatButton (zoomoutRect, new GUIContent(zoomoutIcon), guiStyle)) {
+				audio.PlayOneShot(clipClick);
 				mainCamera.orthographicSize += smooth;
 			}
 
 			//Zoom in button
 			if (GUI.RepeatButton (zoominRect, new GUIContent(zoominIcon), guiStyle)) {
-				if(mainCamera.orthographicSize > maxZoom)
+				if(mainCamera.orthographicSize > maxZoom) {
+					audio.PlayOneShot(clipClick);
 					mainCamera.orthographicSize -= smooth;
+				}
 			}
 
 			//Refresh button
@@ -240,19 +256,20 @@ public class gameStart : MonoBehaviour {
 					i += 1;
 				}
 
-				//Reload the level
-				Application.LoadLevel(Application.loadedLevel);
-				print ("Reloaded the level!");
+				StartCoroutine(waitReloadLevel());
 			}
 
 			//Pause button
 			if (GUI.Button (pauseRect, new GUIContent(pauseIcon), guiStyle)) {
+				audio.PlayOneShot(clipPause);
 				onPause = true;
 			}
 
 			//Launch button
 			if(isGoButtonVisible){
 				if (GUI.Button (launchButtonRect, goContent, guiStyle)) {
+					audio.PlayOneShot(clipClick);
+
 					//Hide this button.
 					isGoButtonVisible = false;				
 					//print ("After: "+isGoButtonVisible);
@@ -270,15 +287,13 @@ public class gameStart : MonoBehaviour {
 					rocketScript.startTrail();
 					
 					//Planets are no longer movable.
-					planetMover[] planetScripts = planets.GetComponentsInChildren<planetMover>();
+					planetScripts = planets.GetComponentsInChildren<planetMover>();
 					foreach(planetMover ps in planetScripts){
 						ps.isMovable = false;
 					}
 
 					print ("x " + oldStarCount);
 				}
-				GUI.Label(launchTextRect, "LAUNCH!", textStyle);
-
 			}
 		}
 	}
