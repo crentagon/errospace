@@ -12,6 +12,8 @@ MonoImporter:
   - iconRedoStage: {fileID: 2800000, guid: fb23f1e8bc8081b459744e6f19a3bd42, type: 3}
   - iconViewStages: {fileID: 2800000, guid: da94565765d96394aadc2d5bea893fc5, type: 3}
   - gameFont: {fileID: 12800000, guid: 2d392d6a986e15348b0ffdd73b1b2abf, type: 3}
+  - clipWin: {fileID: 8300000, guid: 5c414d8b05a49d94da3a86a8619f3862, type: 3}
+  - clipClick: {fileID: 8300000, guid: 8f7fec37e51b1a247ae803dd50e1c2c1, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

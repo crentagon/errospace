@@ -12,6 +12,7 @@ public class SelectLevel_script : MonoBehaviour {
 	public Texture2D iconLevel03;
 	public Texture2D iconLevel04;
 	public Texture2D iconLockedLevel;
+	public Texture2D iconBack;
 
 	public Texture2D iconStarsFull;
 	public Texture2D iconStarsEmpty;
@@ -21,11 +22,21 @@ public class SelectLevel_script : MonoBehaviour {
 	GUIContent buttonLevel03 = new GUIContent();
 	GUIContent buttonLevel04 = new GUIContent();
 	GUIContent buttonLockedLevel = new GUIContent();
+	GUIContent buttonBack = new GUIContent();
 	
 	private int stageCountWorldA = 4;
 	private int stageCountWorldB = 2;
 	private int stageCountWorldC = 2;
 	private int stageCountWorldD = 1;
+		
+	public Font gameFont;
+	GUIStyle textStyle = new GUIStyle();
+
+	private bool willWait = true;
+	
+	public AudioClip clipClick;
+	public AudioClip clipBarred;
+
 //	public Font gameFont;
 //	GUIStyle textStyle = new GUIStyle();
 	
@@ -36,6 +47,10 @@ public class SelectLevel_script : MonoBehaviour {
 		buttonLevel03.image = iconLevel03;
 		buttonLevel04.image = iconLevel04;
 		buttonLockedLevel.image = iconLockedLevel;
+		buttonBack.image = iconBack;
+
+		textStyle.font = gameFont;
+		textStyle.normal.textColor = Color.white;
 		
 //		textStyle.font = gameFont;
 //		textStyle.normal.textColor = Color.white;
@@ -45,7 +60,16 @@ public class SelectLevel_script : MonoBehaviour {
 		
 		
 	}
-	
+
+	IEnumerator waitSelectLevel(string selectedLevel){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;
+			Application.LoadLevel(selectedLevel);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -55,6 +79,13 @@ public class SelectLevel_script : MonoBehaviour {
 		
 		GUIStyle guiStyle = new GUIStyle();
 		guiStyle.padding = new RectOffset(0,0,0,0);
+
+		if(GUI.Button (new Rect(Screen.width*1/50, Screen.height-(Screen.height*1/11), Screen.width*1/4, Screen.height*1/12), buttonBack, guiStyle)){
+			StartCoroutine(waitSelectLevel("SelectWorld"));
+		}
+
+		textStyle.fontSize = 28*Screen.width/700;
+		GUI.Label(new Rect ((Screen.width/2)-(Screen.width*1/9),Screen.height*1/30,Screen.width*1/7,Screen.height*1/7), "WORLD "+world, textStyle);
 
 		int[] scores;
 		
@@ -110,75 +141,84 @@ public class SelectLevel_script : MonoBehaviour {
 
 		Rect[] starCoords = new Rect[15];
 
-		starCoords[0] = new Rect (((Screen.width/2)-(Screen.width*32/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[1] = new Rect (((Screen.width/2)-(Screen.width*29/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[2] = new Rect (((Screen.width/2)-(Screen.width*26/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[3] = new Rect (((Screen.width/2)-(Screen.width*7/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[4] = new Rect (((Screen.width/2)-(Screen.width*4/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[5] = new Rect (((Screen.width/2)-(Screen.width*1/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[6] = new Rect (((Screen.width/2)-(Screen.width*-18/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[7] = new Rect (((Screen.width/2)-(Screen.width*-21/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[8] = new Rect (((Screen.width/2)-(Screen.width*-24/96)),((Screen.height/2)-(Screen.height*17/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[9] = new Rect (((Screen.width/2)-(Screen.width*20/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[10] = new Rect (((Screen.width/2)-(Screen.width*17/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[11] = new Rect (((Screen.width/2)-(Screen.width*14/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[12] = new Rect (((Screen.width/2)-(Screen.width*-5/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[13] = new Rect (((Screen.width/2)-(Screen.width*-8/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
-		starCoords[14] = new Rect (((Screen.width/2)-(Screen.width*-11/96)),((Screen.height/2)-(Screen.height*-23/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[0] = new Rect (((Screen.width/2)-(Screen.width*32/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[1] = new Rect (((Screen.width/2)-(Screen.width*29/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[2] = new Rect (((Screen.width/2)-(Screen.width*26/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[3] = new Rect (((Screen.width/2)-(Screen.width*7/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[4] = new Rect (((Screen.width/2)-(Screen.width*4/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[5] = new Rect (((Screen.width/2)-(Screen.width*1/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[6] = new Rect (((Screen.width/2)-(Screen.width*-18/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[7] = new Rect (((Screen.width/2)-(Screen.width*-21/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[8] = new Rect (((Screen.width/2)-(Screen.width*-24/96)),((Screen.height/2)-(Screen.height*18/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[9] = new Rect (((Screen.width/2)-(Screen.width*20/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[10] = new Rect (((Screen.width/2)-(Screen.width*17/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[11] = new Rect (((Screen.width/2)-(Screen.width*14/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[12] = new Rect (((Screen.width/2)-(Screen.width*-5/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[13] = new Rect (((Screen.width/2)-(Screen.width*-8/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
+		starCoords[14] = new Rect (((Screen.width/2)-(Screen.width*-11/96)),((Screen.height/2)-(Screen.height*-22/100)),Screen.width*1/20,Screen.height*1/20);
 
-		Rect coordsLevel01 = new Rect (((Screen.width/2)-(Screen.width*33/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*2/7,Screen.height*2/7);
-		Rect coordsLevel02 = new Rect (((Screen.width/2)-(Screen.width*8/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*2/7,Screen.height*2/7);
-		Rect coordsLevel03 = new Rect (((Screen.width/2)-(Screen.width*-17/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*2/7,Screen.height*2/7);
-		Rect coordsLevel04 = new Rect (((Screen.width/2)-(Screen.width*21/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*2/7,Screen.height*2/7);
-		Rect coordsLevel05 = new Rect (((Screen.width/2)-(Screen.width*-4/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*2/7,Screen.height*2/7);
+		Rect coordsLevel01 = new Rect (((Screen.width/2)-(Screen.width*33/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*325/2800,Screen.height*2/7);
+		Rect coordsLevel02 = new Rect (((Screen.width/2)-(Screen.width*8/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*325/2800,Screen.height*2/7);
+		Rect coordsLevel03 = new Rect (((Screen.width/2)-(Screen.width*-17/96)),((Screen.height/2)-(Screen.height*3/8)),Screen.width*325/2800,Screen.height*2/7);
+		Rect coordsLevel04 = new Rect (((Screen.width/2)-(Screen.width*21/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*325/2800,Screen.height*2/7);
+		Rect coordsLevel05 = new Rect (((Screen.width/2)-(Screen.width*-4/96)),((Screen.height/2)-(Screen.height*-1/40)),Screen.width*325/2800,Screen.height*2/7);
 
 		if(GUI.Button (coordsLevel01, buttonLevel01, guiStyle)){
-			Application.LoadLevel("Level"+world+"1");
+			StartCoroutine(waitSelectLevel("Level"+world+"1"));
+			//Application.LoadLevel("Level"+world+"1");
 		}
 
 		if(worldScores.Length >= 1 && numStages > 1){
 			if(GUI.Button (coordsLevel02, buttonLevel02, guiStyle)){
-				Application.LoadLevel("Level"+world+"2");
+				StartCoroutine(waitSelectLevel("Level"+world+"2"));
 			}
 
 			if(worldScores.Length >= 2 && numStages > 2){
 				if(GUI.Button (coordsLevel03, buttonLevel03, guiStyle)){
-					Application.LoadLevel("Level"+world+"3");
+					StartCoroutine(waitSelectLevel("Level"+world+"3"));
 				}
 
 				if(worldScores.Length >= 3 && numStages > 3){
 					if(GUI.Button (coordsLevel04, buttonLevel04, guiStyle)){
-						Application.LoadLevel("Level"+world+"4");
+						StartCoroutine(waitSelectLevel("Level"+world+"4"));
 					}
 
 					if(worldScores.Length >= 4 && numStages > 4){
 						if(GUI.Button (coordsLevel05, buttonLevel04, guiStyle)){ //TODO: buttonLevel05
-							Application.LoadLevel("Level"+world+"5");
+							StartCoroutine(waitSelectLevel("Level"+world+"5"));
 						}
 					}
 					else{
-						GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle);
+						if(GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle))
+							audio.PlayOneShot(clipBarred);
 					}
 				}
 				else{
-					GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle);
-					GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle);
+					if(GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle))
+						audio.PlayOneShot(clipBarred);
+					if(GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle))
+						audio.PlayOneShot(clipBarred);
 				}
 			}
 			else{
-				GUI.Button (coordsLevel03, buttonLockedLevel, guiStyle);
-				GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle);
-				GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle);
+				if(GUI.Button (coordsLevel03, buttonLockedLevel, guiStyle))
+					audio.PlayOneShot(clipBarred);
+				if(GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle))
+					audio.PlayOneShot(clipBarred);
+				if(GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle))
+					audio.PlayOneShot(clipBarred);
 			}
 		}
 		else{
-			GUI.Button (coordsLevel02, buttonLockedLevel, guiStyle);
-			GUI.Button (coordsLevel03, buttonLockedLevel, guiStyle);
-			GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle);
-			GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle);
+			if(GUI.Button (coordsLevel02, buttonLockedLevel, guiStyle))
+				audio.PlayOneShot(clipBarred);
+			if(GUI.Button (coordsLevel03, buttonLockedLevel, guiStyle))
+				audio.PlayOneShot(clipBarred);
+			if(GUI.Button (coordsLevel04, buttonLockedLevel, guiStyle))
+				audio.PlayOneShot(clipBarred);
+			if(GUI.Button (coordsLevel05, buttonLockedLevel, guiStyle))
+				audio.PlayOneShot(clipBarred);
 		}
-
-		print ("WORLD SCORES LENGTH: "+worldScores.Length);
 
 		for(int i=0; i<worldScores.Length; i++){
 			if(worldScores.Length < i+1){

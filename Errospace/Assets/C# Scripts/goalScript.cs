@@ -27,8 +27,13 @@ public class goalScript : MonoBehaviour {
 
 	GUIStyle textStyle = new GUIStyle();
 	public Font gameFont;
+	
+	public AudioClip clipWin;
+	public AudioClip clipClick;
 
+	private bool willWait = true;
 	private bool isSavingNotFinished = true;
+	private bool willWaitWin = true;
 
 	public int curLevel;
 
@@ -59,22 +64,58 @@ public class goalScript : MonoBehaviour {
 		firstCollider = collider;
 	}
 
+	
+	IEnumerator waitSelectScene(string selectedScene){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;
+			Application.LoadLevel(selectedScene);
+		}
+	}
+
+	
+	IEnumerator waitReloadLevel(int offset){
+		while(willWait){
+			audio.PlayOneShot(clipClick);
+			yield return new WaitForSeconds(0.3f);
+			willWait = false;
+			int levelToLoad = Application.loadedLevel+offset;
+			Application.LoadLevel(levelToLoad);
+		}
+	}
+
+	IEnumerator waitShowWin(){
+		while(willWaitWin){
+			goalEffect.Play();
+			audio.PlayOneShot(clipWin);
+			yield return new WaitForSeconds(2.5f);
+			willWaitWin = false;
+			showNextLevel = true;
+		}
+	}
+
 	// Update is called once per frame
 	void Update(){
 
 		if(firstCollider != null && firstCollider.transform.name == "Rocket"){
+
+			gameStart gsScript = firstCollider.transform.parent.GetComponent<gameStart>();
+			gsScript.showSideButtons = false;
+
 			//Rocket must stop at the goal position
 			rocketMover rocketScript = firstCollider.GetComponent<rocketMover>();
 			rocketScript.isActive = false;
 			rocketScript.rigidbody2D.velocity = new Vector2 (0, 0);
 			//rocketScript.transform.position = transform.position - new Vector3 (0,0,1);
 			if(!showNextLevel){
-				goalEffect.Play();
+				//goalEffect.Play();
 				rocketScript.stopTrail();
 			}
-			showNextLevel = true;
 
 			if(isSavingNotFinished){
+				StartCoroutine(waitShowWin());
+
 				isSavingNotFinished = false;
 
 				//Read from binary file
@@ -116,7 +157,8 @@ public class goalScript : MonoBehaviour {
 						scores = newScores;
 					}
 					else{
-						scores[curLevel] = starCount;
+						if(scores[curLevel] < starCount)
+							scores[curLevel] = starCount;
 					}
 
 					//Store score
@@ -182,7 +224,7 @@ public class goalScript : MonoBehaviour {
 		//GUI.Button (new Rect (0f, 0f, 100f, 100f), "YEAH", goGuiStyle);
 		//Display next level button
 		if (showNextLevel && GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*1/13)),Screen.width*3/8,Screen.height*3/25), buttonNextStage, goGuiStyle)) {
-			Application.LoadLevel (Application.loadedLevel + 1);
+			StartCoroutine(waitReloadLevel(1));
 		}
 
 		if (showNextLevel && GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-1/18)),Screen.width*3/8,Screen.height*3/25), buttonRedoStage, goGuiStyle)) {
@@ -191,12 +233,12 @@ public class goalScript : MonoBehaviour {
 				planetPositions[j] = planets[j].transform.localPosition;
 			}
 
-			Application.LoadLevel(Application.loadedLevel);
+			StartCoroutine(waitReloadLevel(0));
 		}
 		
 		
 		if (showNextLevel && GUI.Button (new Rect (((Screen.width/2)-(Screen.width*9/72)),((Screen.height/2)-(Screen.height*-27/144)),Screen.width*3/8,Screen.height*3/25), buttonViewStages, goGuiStyle)) {
-			Application.LoadLevel ("SelectWorld");
+			StartCoroutine(waitSelectScene("SelectWorld"));
 		}
 	}
 }
