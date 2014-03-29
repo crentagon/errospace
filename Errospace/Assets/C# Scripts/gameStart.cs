@@ -109,7 +109,6 @@ public class gameStart : MonoBehaviour {
 	}
 
 	void DrawQuad(Rect position, Color color) {
-		color.a = 0.5f;
 		Texture2D texture = new Texture2D(1, 1);
 		texture.SetPixel(0,0,color);
 		texture.Apply();
@@ -135,11 +134,14 @@ public class gameStart : MonoBehaviour {
 		GUI.Label(new Rect(10f,10f,40f, 40f), new GUIContent(starIcon));
 
 		if (onPause) {
+			// Define pause window bounds
 			Rect pauseRect = new Rect(
 				(width - pauseWindow.width)/2,
 				(height - pauseWindow.height)/2,
 				pauseWindow.width,
 				pauseWindow.height);
+
+			// Define pause menu buttons' bounds
 			Rect resumeRect = new Rect(
 				(width - buttonResume.width)/2,
 				(height - buttonResume.height)/2 - 60,
@@ -156,18 +158,26 @@ public class gameStart : MonoBehaviour {
 				buttonResume.width,
 				buttonResume.height);
 
-			DrawQuad(new Rect(0,0,width,height), Color.black);
+			// Faded background
+			DrawQuad(new Rect(0,0,width,height), new Color(0,0,0,0.5f));
 
+			// Pause window
 			GUI.Label(pauseRect, new GUIContent(pauseWindow));
+
+			// Resume button
 			if(GUI.Button(resumeRect, buttonResume, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 			}
+
+			// Stages button
 			if(GUI.Button(stagesRect, buttonStages, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
 				Application.LoadLevel ("SelectWorld");
 			}
+
+			// Main menu button
 			if(GUI.Button(mainmenuRect, buttonMainMenu, guiStyle)){
 				onPause = false;
 				Time.timeScale = 1;
