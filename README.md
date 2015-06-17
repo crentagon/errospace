@@ -13,6 +13,7 @@ The title screen.
 World selection screen.
 
 Each world has five stages, and offers a new mechanic to the gameplay:
+
 1. **Planets**: movable objects that influence the rocket's gravity.
 2. **Black Holes**: immovable objects that influence the rocket's gravity.
 3. **Asteroid Belts**: walls the rocket must not crash into.
